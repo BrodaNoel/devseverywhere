@@ -17,4 +17,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # mines
+src/*.css
 src/**/*.css
