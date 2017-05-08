@@ -12,6 +12,10 @@ export class CardSelectionPage extends Component {
     { name: 'PHP', hashtags: ['#php'] }
   ];
 
+  handleCardClick = (card) => {
+    this.props.history.push(`/request-access/twitter`);
+  }
+
   render() {
     return (
       <div className="CardSelectionPage">
@@ -20,6 +24,7 @@ export class CardSelectionPage extends Component {
             return (
               <Card
                 key={card.name}
+                onClick={() => {this.handleCardClick(card)}}
                 {...card} />
             )
           })

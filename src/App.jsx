@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="router">
+        <div>
           <Route exact path="/" component={ CardSelectionPage } />
           <Route path="/request-access/:social" />
           <Route path="/:tech" />
