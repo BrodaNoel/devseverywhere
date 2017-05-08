@@ -5,7 +5,7 @@ export class Card extends Component {
   render() {
     return (
       <div className="Card" onClick={this.props.onClick}>
-        <span>Card: {this.props.name}</span>
+        {this.props.name}
       </div>
     );
   }
