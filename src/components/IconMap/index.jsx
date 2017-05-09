@@ -1,0 +1,1 @@
+export { IconMap } from './IconMap';
