@@ -6,7 +6,7 @@ import { Card } from '../Card';
 export class CardSelection extends Component {
   render() {
     return (
-      <div className="CardSelectionPage">
+      <div className="CardSelection">
         {
           this.props.cards.map((card) => {
             return (
