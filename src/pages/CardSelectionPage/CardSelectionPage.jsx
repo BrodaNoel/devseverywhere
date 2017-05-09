@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './styles.css';
 
-import { Card } from '../../components/Card';
+import { CardSelection } from '../../components/CardSelection';
+import './styles.css';
 
 export class CardSelectionPage extends Component {
   // TODO: Move it to some kind of implementation
@@ -25,16 +25,10 @@ export class CardSelectionPage extends Component {
   render() {
     return (
       <div className="CardSelectionPage">
-        {
-          this.cards.map((card) => {
-            return (
-              <Card
-                key={card.name}
-                onClick={() => {this.handleCardClick(card)}}
-                {...card} />
-            )
-          })
-        }
+        <CardSelection
+          cards={this.cards}
+          isLoggedInTwitter={this.isLoggedInTwitter}>
+        </CardSelection>
       </div>
     );
   }
