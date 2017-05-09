@@ -12,7 +12,7 @@ export class CardSelection extends Component {
             return (
               <Card
                 key={card.name}
-                onClick={() => {this.props.handleCardClick(card)}}
+                onClick={() => {this.props.onCardClick(card)}}
                 {...card} />
             )
           })

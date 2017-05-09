@@ -28,7 +28,8 @@ export class CardSelectionPage extends Component {
       <div className="CardSelectionPage">
         <CardSelection
           cards={this.cards}
-          isLoggedInTwitter={this.isLoggedInTwitter}>
+          isLoggedInTwitter={this.isLoggedInTwitter}
+          onCardClick={this.handleCardClick}>
         </CardSelection>
       </div>
     );
