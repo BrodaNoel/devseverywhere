@@ -11,6 +11,7 @@ export class CardSelectionPage extends Component {
     { name: 'VueJS', hashtags: ['#vuejs', '#vue'] },
     { name: 'Ember', hashtags: ['#emberjs', '#ember'] }
   ];
+
   // TODO: Move it to some kind of service
   isLoggedInTwitter = true;
 
