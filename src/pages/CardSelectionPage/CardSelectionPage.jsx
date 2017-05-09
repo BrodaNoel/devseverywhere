@@ -9,11 +9,17 @@ export class CardSelectionPage extends Component {
     { name: 'ReactJS', hashtags: ['#reactJS', '#react'] },
     { name: 'AngularJS', hashtags: ['#angularjs', '#angular'] },
     { name: 'VueJS', hashtags: ['#vuejs', '#vue'] },
-    { name: 'PHP', hashtags: ['#php'] }
+    { name: 'Ember', hashtags: ['#emberjs', '#ember'] }
   ];
+  // TODO: Move it to some kind of service
+  isLoggedInTwitter = true;
 
   handleCardClick = (card) => {
-    this.props.history.push(`/request-access/twitter`);
+    if (!this.isLoggedInTwitter) {
+      this.props.history.push('/request-access/twitter');
+    } else {
+      this.props.history.push(`/${card.name}`);
+    }
   }
 
   render() {
