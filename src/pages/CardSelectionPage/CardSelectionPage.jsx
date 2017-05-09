@@ -15,7 +15,7 @@ export class CardSelectionPage extends Component {
   // TODO: Move it to some kind of service
   isLoggedInTwitter = true;
 
-  handleCardClick = (card) => {
+  onCardClick = (card) => {
     if (!this.isLoggedInTwitter) {
       this.props.history.push('/request-access/twitter');
     } else {
@@ -29,8 +29,7 @@ export class CardSelectionPage extends Component {
         <CardSelection
           cards={this.cards}
           isLoggedInTwitter={this.isLoggedInTwitter}
-          onCardClick={this.handleCardClick}>
-        </CardSelection>
+          onCardClick={this.onCardClick} />
       </div>
     );
   }
