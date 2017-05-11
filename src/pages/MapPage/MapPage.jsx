@@ -23,9 +23,15 @@ export class MapPage extends Component {
     { name: 'Ember', hashtags: ['#emberjs', '#ember'] }
   ];
 
+  isLoggedInTwitter = false;
+
   onCardClick = (card) => {
-    console.log(card);
-  };
+    if (!this.isLoggedInTwitter) {
+      this.props.history.push(`/request-access/twitter/${card.name}`);
+    } else {
+      this.props.history.push(`/${card.name}`);
+    }
+  }
 
   render() {
     return (
