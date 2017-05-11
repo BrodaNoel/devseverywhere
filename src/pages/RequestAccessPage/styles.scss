@@ -1,0 +1,26 @@
+.RequestAccessPage {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+
+  justify-content: center;
+  align-items: center;
+
+  .disclaimer {
+    font-size: 20px;
+    text-align: center;
+
+    .joke {
+      font-size: 14px;
+    }
+  }
+
+  .button {
+    background-color: #333;
+    width: 50%;
+    margin: 20px auto 0;
+    border-radius: 5px;
+    cursor: pointer;
+    line-height: 40px;
+  }
+}

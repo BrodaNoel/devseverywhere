@@ -1,12 +1,13 @@
 {
   "name": "devseverywhere",
   "author": {
-    "name" : "Broda Noel",
-    "email" : "brodanoel@gmail.com"
+    "name": "Broda Noel",
+    "email": "brodanoel@gmail.com"
   },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^3.9.0",
     "google-map-react": "^0.24.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
