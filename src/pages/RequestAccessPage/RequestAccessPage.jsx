@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import * as firebase from 'firebase';
 import './styles.css';
 
-import * as firebase from 'firebase';
+import { backend } from '../../services';
 
 export class RequestAccessPage extends Component {
   tech = this.props.match.params.tech;
@@ -38,9 +39,7 @@ export class RequestAccessPage extends Component {
 
       this.setState({buttonLabel: 'Looking for Tweets...'});
 
-      fetch('https://us-central1-devseverywhere-1494347271845.cloudfunctions.net/getTweets', {
-        method: 'GET'
-      }).then(r => r.json())
+      backend.getTweets()
         .then(r => {
           // TODO: Remove it after Redux implementation
           window.tweets = r.tweets.statuses;
