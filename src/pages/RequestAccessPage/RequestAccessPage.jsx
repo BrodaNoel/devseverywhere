@@ -4,9 +4,8 @@
 
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import cookies from 'js-cookie';
 import './styles.css';
-
-import { backend } from '../../services';
 
 export class RequestAccessPage extends Component {
   tech = this.props.match.params.tech;
@@ -33,24 +32,14 @@ export class RequestAccessPage extends Component {
     var provider = new firebase.auth.TwitterAuthProvider();
 
     firebase.auth().signInWithPopup(provider).then(result => {
-      // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-      // You can use these server side with your app's credentials to access the Twitter API.
-      //var token = result.credential.accessToken;
-      //var secret = result.credential.secret;
-      // The signed-in user info.
-      //var user = result.user;
-      // ...
+      // TODO: Move if after implementing Redux
+      window.credentials = result.credential;
+      cookies.set('credentials', result.credential);
+      window.isLoggedInTwitter = true;
+      window.user = result.user;
 
-      this.setState({buttonLabel: 'Looking for Tweets...'});
-
-      backend.getTweets('#' + this.tech)
-        .then(r => {
-          // TODO: Remove it after Redux implementation
-          window.tweets = r.tweets;
-          this.setState({buttonLabel: 'Redirecting...'});
-
-          setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);
-        });
+      this.setState({buttonLabel: 'Redirecting...'});
+      setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);
 
     }).catch(error => {
       // Handle Errors here.

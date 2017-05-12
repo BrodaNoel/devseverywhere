@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import cookies from 'js-cookie';
 
 import { CardSelectionPage } from './pages/CardSelectionPage';
 import { RequestAccessPage } from './pages/RequestAccessPage';
-import { MapPage } from './pages/MapPage';
+import { AnalyticsPage } from './pages/AnalyticsPage';
 
 document.title = 'DevsEverywhere!';
 
 // TODO: These globals vars will be removed after implementing Redux. Sorry!
 window.tweets = [];
-window.isLoggedInTwitter = false;
 window.cards = [
   { name: 'ReactJS', hashtags: ['#reactJS', '#react'] },
   { name: 'AngularJS', hashtags: ['#angularjs', '#angular'] },
   { name: 'VueJS', hashtags: ['#vuejs', '#vue'] },
   { name: 'Ember', hashtags: ['#emberjs', '#ember'] }
 ];
+// Firebase data
+window.credentials = cookies.getJSON('credentials') || null;
+window.isLoggedInTwitter = window.credentials !== null;
+window.user = null;
+window.selectedCard = null;
 
 class App extends Component {
   render() {
@@ -24,7 +29,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={CardSelectionPage} />
           <Route exact path="/request-access/:social/:tech" component={RequestAccessPage} />
-          <Route exact path="/:tech" component={MapPage}/>
+          <Route exact path="/:tech" component={AnalyticsPage}/>
         </div>
       </Router>
     );

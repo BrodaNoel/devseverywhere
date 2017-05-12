@@ -4,14 +4,11 @@ import { CardSelection } from '../../components/CardSelection';
 import './styles.css';
 
 export class CardSelectionPage extends Component {
-  // TODO: Remove it after Redux implementation
-  cards = window.cards;
-  isLoggedInTwitter = window.isLoggedInTwitter;
-
   onCardClick = (card) => {
-    if (!this.isLoggedInTwitter) {
+    if (!window.isLoggedInTwitter) {
       this.props.history.push(`/request-access/twitter/${card.name}`);
     } else {
+      window.selectedCard = card;
       this.props.history.push(`/${card.name}`);
     }
   }
@@ -20,8 +17,8 @@ export class CardSelectionPage extends Component {
     return (
       <div className="CardSelectionPage">
         <CardSelection
-          cards={this.cards}
-          isLoggedInTwitter={this.isLoggedInTwitter}
+          cards={window.cards}
+          isLoggedInTwitter={window.isLoggedInTwitter}
           onCardClick={this.onCardClick} />
       </div>
     );
