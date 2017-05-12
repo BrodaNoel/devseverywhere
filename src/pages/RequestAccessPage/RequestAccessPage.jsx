@@ -4,10 +4,17 @@ import './styles.css';
 import * as firebase from 'firebase';
 
 export class RequestAccessPage extends Component {
-  requesting = false;
+  tech = this.props.match.params.tech;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      buttonLabel: 'Ok!'
+    };
+  }
 
   requestTwitterAccess = () => {
-    this.requesting = true;
+    this.setState({buttonLabel: 'Requesting Access...'});
 
     firebase.initializeApp({
       apiKey: "AIzaSyAeHEdRmODY2oS6LwwpCizy7ChL8RYKsaw",
@@ -20,7 +27,7 @@ export class RequestAccessPage extends Component {
 
     var provider = new firebase.auth.TwitterAuthProvider();
 
-    firebase.auth().signInWithPopup(provider).then(function(result) {
+    firebase.auth().signInWithPopup(provider).then(result => {
       // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
       // You can use these server side with your app's credentials to access the Twitter API.
       //var token = result.credential.accessToken;
@@ -29,17 +36,20 @@ export class RequestAccessPage extends Component {
       //var user = result.user;
       // ...
 
-      // {this.props.match.params.tech}
+      this.setState({buttonLabel: 'Looking for Tweets...'});
+
       fetch('https://us-central1-devseverywhere-1494347271845.cloudfunctions.net/getTweets', {
         method: 'GET'
       }).then(r => r.json())
-        .then((r) => {
-          // TODO: Here we have to set the `r.tweets.statuses` to our Redux
-          console.log(r.tweets.statuses);
-          this.requesting = false;
+        .then(r => {
+          // TODO: Remove it after Redux implementation
+          window.tweets = r.tweets.statuses;
+          this.setState({buttonLabel: 'Redirecting...'});
+
+          setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);
         });
 
-    }).catch(function(error) {
+    }).catch(error => {
       // Handle Errors here.
       //var errorCode = error.code;
       //var errorMessage = error.message;
@@ -62,7 +72,7 @@ export class RequestAccessPage extends Component {
           <div className="joke">Nah... Just kidding</div>
 
           <div className="button" onClick={this.requestTwitterAccess}>
-            {this.requesting ? 'Loading...' : 'Ok!'}
+            {this.state.buttonLabel}
           </div>
         </div>
       </div>

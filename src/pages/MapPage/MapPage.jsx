@@ -15,15 +15,10 @@ export class MapPage extends Component {
     zoom: 0
   };
 
-  // TODO: Move it to some kind of implementation
-  cards = [
-    { name: 'ReactJS', hashtags: ['#reactJS', '#react'] },
-    { name: 'AngularJS', hashtags: ['#angularjs', '#angular'] },
-    { name: 'VueJS', hashtags: ['#vuejs', '#vue'] },
-    { name: 'Ember', hashtags: ['#emberjs', '#ember'] }
-  ];
-
-  isLoggedInTwitter = false;
+  // TODO: Remove it after Redux implementation
+  cards = window.cards;
+  tweets = window.tweets;
+  isLoggedInTwitter = window.isLoggedInTwitter;
 
   onCardClick = (card) => {
     if (!this.isLoggedInTwitter) {
