@@ -1,3 +1,7 @@
+// TODO: Here we have to simulate that someone is writting, adding one char at the
+// time that someone press the key.
+// I should create a prackage for this...
+
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import './styles.css';
@@ -39,10 +43,10 @@ export class RequestAccessPage extends Component {
 
       this.setState({buttonLabel: 'Looking for Tweets...'});
 
-      backend.getTweets()
+      backend.getTweets('#' + this.tech)
         .then(r => {
           // TODO: Remove it after Redux implementation
-          window.tweets = r.tweets.statuses;
+          window.tweets = r.tweets;
           this.setState({buttonLabel: 'Redirecting...'});
 
           setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);

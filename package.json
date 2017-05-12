@@ -7,6 +7,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "big-integer": "^1.6.22",
     "firebase": "^3.9.0",
     "google-map-react": "^0.24.0",
     "prop-types": "^15.5.8",
