@@ -10,6 +10,7 @@ import { IconMap } from '../../components/IconMap';
 import { CardSelection } from '../../components/CardSelection';
 
 import { backend } from '../../services';
+import { utils } from '../../utils';
 
 export class AnalyticsPage extends Component {
   static defaultProps = {
@@ -26,13 +27,15 @@ export class AnalyticsPage extends Component {
       tech: props.match.params.tech,
       showMap: false,
       analytics: {
+        hours: {},
         favorites: {},
         retweets: {},
         users: {
           verifiedRate: 0,
           geoEnabledRate: 0
         },
-        tweetsWithGeoRate: 0
+        tweetsWithGeoRate: 0,
+        tweetsCount: 0
       }
     };
   }
@@ -104,8 +107,10 @@ export class AnalyticsPage extends Component {
     }
 
     // Calculate rates
-    data.users.verifiedRate = data.users.verified / window.tweets.length * 100;
-    data.tweetsWithGeoRate = data.tweetsWithGeo.length / window.tweets.length * 100;
+    data.users.verifiedRate = utils.truncate(data.users.verified / window.tweets.length * 100, 2);
+    data.tweetsWithGeoRate = utils.truncate(data.tweetsWithGeo.length / window.tweets.length * 100, 2);
+
+    data.tweetsCount = window.tweets.length;
 
     this.setState({analytics: data});
 
@@ -158,15 +163,18 @@ export class AnalyticsPage extends Component {
 
         <div className={ 'analyticsContainer ' + (!this.state.showMap ? 'full' : '') }>
           <div className="row">
-            <div className="cell">{JSON.stringify(this.state.analytics.hours)}<br/>grafico de circulos</div>
-            <div className="cell">{JSON.stringify(this.state.analytics.langs)}<br/>graficos de barra horizontales</div>
-            <div className="cell">{JSON.stringify(this.state.analytics.favorites)} & {JSON.stringify(this.state.analytics.retweets)}<br/>grafico de lineas verticales (1 para 2)</div>
+            <div className="cell">User verified: { this.state.analytics.users.verifiedRate }%</div>
+            <div className="cell">Tweets analized: { this.state.analytics.tweetsCount }</div>
+            <div className="cell">Tweets with geolocation: { this.state.analytics.tweetsWithGeoRate }%</div>
           </div>
 
           <div className="row">
-            <div className="cell">User verified: { this.state.analytics.users.verifiedRate }%</div>
+            <div className="cell">{JSON.stringify(this.state.analytics.favorites)} & {JSON.stringify(this.state.analytics.retweets)}<br/>grafico de lineas verticales (1 para 2)</div>
+            <div className="cell">{
+                Object.keys(this.state.analytics.hours).map((hour) => `${hour}hs: ${this.state.analytics.hours[hour]},`)
+            }<br/>grafico de circulos</div>
+            <div className="cell">{JSON.stringify(this.state.analytics.langs)}<br/>graficos de barra horizontales</div>
             <div className="cell">{JSON.stringify(this.state.analytics.users.followers)} & {JSON.stringify(this.state.analytics.users.following)}<br/>grafico de lineas verticales (1 para 2)</div>
-            <div className="cell">Tweets with geolocation: { this.state.analytics.tweetsWithGeoRate }%</div>
           </div>
         </div>
 
