@@ -14,7 +14,7 @@ window.cards = [
   { name: 'ReactJS', hashtags: ['#reactJS', '#react'] },
   { name: 'AngularJS', hashtags: ['#angularjs', '#angular'] },
   { name: 'VueJS', hashtags: ['#vuejs', '#vue'] },
-  { name: 'Ember', hashtags: ['#emberjs', '#ember'] }
+  { name: 'EmberJS', hashtags: ['#emberjs', '#ember'] }
 ];
 // Firebase data
 window.credentials = cookies.getJSON('credentials') || null;

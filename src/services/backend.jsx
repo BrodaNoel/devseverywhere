@@ -2,73 +2,49 @@ var num = require('big-integer');
 
 const config = {
   twitter: {
-    count: 100,
-    maxRequests: 3
+    count: 100
   }
 };
 
-var requestsDone = 1;
+let isDone = false;
+let nextMax = null;
 
 // Private functions
 const _ = {
-  getTweets(q) {
-    return new Promise(function(done, fail) {
-      _.searchTweets(q, null, null, 0, [], done, fail);
-    });
-  },
+  searchTweets(q) {
+    return new Promise((done, fail) => {
+      let tweets = [];
+      let params = {
+        q,
+        max: nextMax,
+        count: config.twitter.count
+      };
 
-  searchTweets(q, firstMax, max, min, posts, globalDone, globalFail) {
-    var params = {
-      max: max === null ? null : num(max).subtract(1),
-      min: min,
-      count: config.twitter.count
-    };
-
-    _.getTweetsFromBackend(q, params).then(function(twitterResponse) {
-      var tweets = twitterResponse.tweets.statuses;
-
-      if (tweets) {
-        tweets.forEach(function(tweet) {
-          posts.push(tweet);
+      if (isDone) {
+        done({
+          tweets,
+          isDone
         });
-
-        if (firstMax === null) {
-          firstMax = twitterResponse.metadata.max;
-        }
-
-        if (twitterResponse.isDone || requestsDone === config.twitter.maxRequests) {
-          globalDone({
-            tweets: posts,
-            newMin: firstMax
-          });
-        } else {
-          requestsDone++;
-          _.searchTweets(
-            q,
-            firstMax,
-            twitterResponse.metadata.min, // max
-            min,
-            posts,
-            globalDone,
-            globalFail
-          );
-        }
-
-      } else {
-        globalDone({
-          tweets: posts,
-          newMin: firstMax
-        });
+        return;
       }
 
-    }).catch(function(error) {
-      globalFail(error);
+      _.getTweetsFromBackend(q, params).then(twitterResponse => {
+        tweets = twitterResponse.tweets.statuses;
+
+        isDone = twitterResponse.isDone;
+        nextMax = num(twitterResponse.metadata.min).subtract(1);
+
+        done({
+          tweets,
+          isDone
+        });
+      }).catch(fail);
     });
   },
 
   getTweetsFromBackend(q, params) {
     var url = 'https://us-central1-devseverywhere-1494347271845.cloudfunctions.net/getTweets';
-    url += `?q=${encodeURIComponent(q)}&min=${params.min}&max=${params.max}&count=${params.count}`;
+    url += `?q=${encodeURIComponent(q)}&max=${params.max}&count=${params.count}`;
 
     return fetch(url, {
       method: 'GET'
@@ -78,5 +54,5 @@ const _ = {
 
 // Exposing
 export const backend = {
-  getTweets: _.getTweets
+  getTweets: _.searchTweets
 };
