@@ -17,6 +17,8 @@ export class AnalyticsPage extends Component {
     zoom: 0
   };
 
+  isDone = false;
+
   constructor(props) {
     super(props);
 
@@ -106,6 +108,14 @@ export class AnalyticsPage extends Component {
     data.tweetsWithGeoRate = data.tweetsWithGeo.length / window.tweets.length * 100;
 
     this.setState({analytics: data});
+
+    if (!this.isDone) {
+      setTimeout(() => {
+        this.getAnalyticsData().then(() => {
+          this.calculateAnalytics();
+        });
+      }, 1000 * 10);
+    }
   }
 
   getAnalyticsData() {
@@ -113,6 +123,7 @@ export class AnalyticsPage extends Component {
       .then(r => {
         // TODO: Remove it after Redux implementation
         window.tweets = [...window.tweets, ...r.tweets];
+        this.isDone = r.isDone;
       });
   }
 
