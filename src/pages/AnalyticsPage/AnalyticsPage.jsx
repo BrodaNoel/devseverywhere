@@ -11,25 +11,6 @@ import { CardSelection } from '../../components/CardSelection';
 
 import { backend } from '../../services';
 
-/*
- Tweet object example
- {
-   coordinates: x.coordinates,
-   created_at: x.created_at,
-   lang: x.lang,
-   place: x.place,
-   favorite_count: x.favorite_count,
-   retweet_count: x.retweet_count,
-   user: {
-     verified: x.user.verified,
-     geo_enabled: x.user.geo_enabled,
-     followers_count: x.user.followers_count,
-     friends_count: x.user.friends_count
-   }
- }
-
- */
-
 export class AnalyticsPage extends Component {
   static defaultProps = {
     center: { lat: 10, lng: -35 },
@@ -43,10 +24,13 @@ export class AnalyticsPage extends Component {
       tech: props.match.params.tech,
       showMap: false,
       analytics: {
+        favorites: {},
+        retweets: {},
         users: {
           verifiedRate: 0,
           geoEnabledRate: 0
-        }
+        },
+        tweetsWithGeoRate: 0
       }
     };
   }
@@ -70,24 +54,44 @@ export class AnalyticsPage extends Component {
     var data = {
       hours: {},
       langs: {},
+      favorites: {},
+      retweets: {},
       users: {
         verified: 0,
         verifiedRate: 0,
-        geoEnabled: 0,
-        geoEnabledRate: 0
-      }
+        followers: {},
+        following: {}
+      },
+      tweetsWithGeo: [],
+      tweetsWithGeoRate: 0
     };
 
     window.tweets.forEach((tweet) => {
-      data.hours[3] = !!data.hours[3] ? data.hours[3] + 1 : 1;
-      data.langs[tweet.lang] = !!data.langs[tweet.lang] ? data.langs[tweet.lang] + 1 : 1;
+      let hour = new Date(tweet.created_at).getUTCHours();
+      data.hours[hour] = data.hours[hour] || 0;
+      data.hours[hour]++;
+
+      data.langs[tweet.lang] = data.langs[tweet.lang] || 0;
+      data.langs[tweet.lang]++;
+
+      data.favorites[tweet.favorite_count] = data.favorites[tweet.favorite_count] || 0;
+      data.favorites[tweet.favorite_count]++;
+
+      data.retweets[tweet.retweet_count] = data.retweets[tweet.retweet_count] || 0;
+      data.retweets[tweet.retweet_count]++;
+
+      data.users.followers[tweet.user.followers_count] = data.users.followers[tweet.user.followers_count] || 0;
+      data.users.followers[tweet.user.followers_count]++;
+
+      data.users.following[tweet.user.friends_count] = data.users.following[tweet.user.friends_count] || 0;
+      data.users.following[tweet.user.friends_count]++;
 
       if (tweet.user.verified) {
         data.users.verified++;
       }
 
-      if (tweet.user.geo_enabled) {
-        data.users.geoEnabled++;
+      if (tweet.coordinates || tweet.place) {
+        data.tweetsWithGeo.push(tweet);
       }
     });
 
@@ -99,7 +103,7 @@ export class AnalyticsPage extends Component {
 
     // Calculate rates
     data.users.verifiedRate = data.users.verified / window.tweets.length * 100;
-    data.users.geoEnabledRate = data.users.geoEnabled / window.tweets.length * 100;
+    data.tweetsWithGeoRate = data.tweetsWithGeo.length / window.tweets.length * 100;
 
     this.setState({analytics: data});
   }
@@ -145,13 +149,13 @@ export class AnalyticsPage extends Component {
           <div className="row">
             <div className="cell">{JSON.stringify(this.state.analytics.hours)}<br/>grafico de circulos</div>
             <div className="cell">{JSON.stringify(this.state.analytics.langs)}<br/>graficos de barra horizontales</div>
-            <div className="cell">favorite_count & retweet_count - grafico de lineas verticales (1 para 2)</div>
+            <div className="cell">{JSON.stringify(this.state.analytics.favorites)} & {JSON.stringify(this.state.analytics.retweets)}<br/>grafico de lineas verticales (1 para 2)</div>
           </div>
 
           <div className="row">
             <div className="cell">User verified: { this.state.analytics.users.verifiedRate }%</div>
-            <div className="cell">user.followers_count & user.friends_count - grafico de lineas verticales (1 para 2)</div>
-            <div className="cell">User with geolocation enabled: { this.state.analytics.users.geoEnabled }%</div>
+            <div className="cell">{JSON.stringify(this.state.analytics.users.followers)} & {JSON.stringify(this.state.analytics.users.following)}<br/>grafico de lineas verticales (1 para 2)</div>
+            <div className="cell">Tweets with geolocation: { this.state.analytics.tweetsWithGeoRate }%</div>
           </div>
         </div>
 
