@@ -3,7 +3,7 @@ var num = require('big-integer');
 const config = {
   twitter: {
     count: 100,
-    maxRequests: 30
+    maxRequests: 3
   }
 };
 
@@ -29,17 +29,7 @@ const _ = {
 
       if (tweets) {
         tweets.forEach(function(tweet) {
-          posts.push({
-            id_source: 1, // Twitter
-            user: {
-              id: tweet.user.id_str,
-              location: tweet.user.location
-            },
-            place: tweet.place,
-            source_id: tweet.id_str,
-            text: tweet.text,
-            coordinates: tweet.coordinates
-          });
+          posts.push(tweet);
         });
 
         if (firstMax === null) {
