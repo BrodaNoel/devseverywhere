@@ -36,8 +36,20 @@ export class AnalyticsPage extends Component {
     zoom: 0
   };
 
-  tech = this.props.match.params.tech;
-  showMap = false;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tech: props.match.params.tech,
+      showMap: false,
+      analytics: {
+        users: {
+          verifiedRate: 0,
+          geoEnabledRate: 0
+        }
+      }
+    };
+  }
 
   onCardClick = (card) => {
     if (!window.isLoggedInTwitter) {
@@ -51,28 +63,73 @@ export class AnalyticsPage extends Component {
 
   restartAnalytics(card) {
     window.tweets = [];
-    this.tech = card.name;
+    this.analytics = {};
   }
 
-  showAnalytics() {
-    backend.getTweets('#' + this.tech)
+  calculateAnalytics() {
+    var data = {
+      hours: {},
+      langs: {},
+      users: {
+        verified: 0,
+        verifiedRate: 0,
+        geoEnabled: 0,
+        geoEnabledRate: 0
+      }
+    };
+
+    window.tweets.forEach((tweet) => {
+      data.hours[3] = !!data.hours[3] ? data.hours[3] + 1 : 1;
+      data.langs[tweet.lang] = !!data.langs[tweet.lang] ? data.langs[tweet.lang] + 1 : 1;
+
+      if (tweet.user.verified) {
+        data.users.verified++;
+      }
+
+      if (tweet.user.geo_enabled) {
+        data.users.geoEnabled++;
+      }
+    });
+
+    // If "und" (undefined) key is defined, rename it for "unknown".
+    if (typeof data.langs.und !== 'undefined') {
+      data.langs.unknown = data.langs.und;
+      delete data.langs.und;
+    }
+
+    // Calculate rates
+    data.users.verifiedRate = data.users.verified / window.tweets.length * 100;
+    data.users.geoEnabledRate = data.users.geoEnabled / window.tweets.length * 100;
+
+    this.setState({analytics: data});
+  }
+
+  getAnalyticsData() {
+    return backend.getTweets('#' + this.state.tech)
       .then(r => {
         // TODO: Remove it after Redux implementation
-        window.tweets.push(r.tweets);
+        window.tweets = [...window.tweets, ...r.tweets];
       });
   }
 
   componentDidMount() {
     if (!window.isLoggedInTwitter) {
-      this.props.history.push(`/request-access/twitter/${this.tech}`);
+      this.props.history.push(`/request-access/twitter/${this.state.tech}`);
     } else {
       if (window.selectedCard === null) {
-        window.selectedCard = window.cards.find(x => x.name === this.tech);
+        window.selectedCard = window.cards.find(x => x.name === this.state.tech);
       }
 
-      this.restartAnalytics(window.selectedCard);
-      this.showAnalytics();
+      window.tweets = [];
+      this.getAnalyticsData().then(() => {
+        this.calculateAnalytics();
+      });
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({tech: nextProps.match.params.tech});
+    this.restartAnalytics(window.selectedCard);
   }
 
   render() {
@@ -84,21 +141,31 @@ export class AnalyticsPage extends Component {
             onCardClick={this.onCardClick} />
         </div>
 
-        <div className={ 'analyticsContainer ' + (!this.showMap ? 'full' : '') }>
-          Some data
+        <div className={ 'analyticsContainer ' + (!this.state.showMap ? 'full' : '') }>
+          <div className="row">
+            <div className="cell">{JSON.stringify(this.state.analytics.hours)}<br/>grafico de circulos</div>
+            <div className="cell">{JSON.stringify(this.state.analytics.langs)}<br/>graficos de barra horizontales</div>
+            <div className="cell">favorite_count & retweet_count - grafico de lineas verticales (1 para 2)</div>
+          </div>
+
+          <div className="row">
+            <div className="cell">User verified: { this.state.analytics.users.verifiedRate }%</div>
+            <div className="cell">user.followers_count & user.friends_count - grafico de lineas verticales (1 para 2)</div>
+            <div className="cell">User with geolocation enabled: { this.state.analytics.users.geoEnabled }%</div>
+          </div>
         </div>
 
-        <div className="mapContainer">
-          {
-            this.showMap &&
+        {
+          this.state.showMap &&
+          <div className="mapContainer">
             <GoogleMapReact
               defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
               bootstrapURLKeys={{key: 'AIzaSyCzNy8leybwmkQbAFEvRCzRIB29YOlN0Ww'}}>
               <IconMap lat={10} lng={-35} />
             </GoogleMapReact>
-          }
-        </div>
+          </div>
+        }
       </div>
     );
   }
