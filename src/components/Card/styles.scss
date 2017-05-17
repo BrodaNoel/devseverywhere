@@ -1,6 +1,8 @@
+@import '../../utils/colors.scss';
+
 .Card {
   margin: 5px;
-  border: 1px solid #DDD;
+  border: 1px solid $color-secondary;
   cursor: pointer;
 
   display: flex;

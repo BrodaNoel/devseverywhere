@@ -1,8 +1,10 @@
+@import './utils/colors.scss';
+
 body {
   width: 100vw;
   height: 100vh;
-  background-color: #000;
-  color: #DDD;
+  background-color: $color-primary;
+  color: $color-secondary;
   font-family: sans-serif;
   margin: 0;
   padding: 0;
