@@ -4,13 +4,14 @@
   */
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import './styles.css';
+import { VictoryChart, VictoryLegend, VictoryTheme, VictoryLine } from 'victory';
 
 import { IconMap } from '../../components/IconMap';
 import { CardSelection } from '../../components/CardSelection';
 
 import { backend } from '../../services';
 import { utils } from '../../utils';
+import './styles.css';
 
 export class AnalyticsPage extends Component {
   static defaultProps = {
@@ -28,8 +29,8 @@ export class AnalyticsPage extends Component {
       showMap: false,
       analytics: {
         hours: {},
-        favorites: {},
-        retweets: {},
+        favorites: [],
+        retweets: [],
         users: {
           verifiedRate: 0,
           geoEnabledRate: 0
@@ -58,14 +59,11 @@ export class AnalyticsPage extends Component {
   calculateAnalytics() {
     var data = {
       hours: {},
-      langs: {},
-      favorites: {},
-      retweets: {},
+      favorites: [0,0,0,0,0,0,0,0,0,0],
+      retweets: [0,0,0,0,0,0,0,0,0,0],
       users: {
         verified: 0,
-        verifiedRate: 0,
-        followers: {},
-        following: {}
+        verifiedRate: 0
       },
       tweetsWithGeo: [],
       tweetsWithGeoRate: 0
@@ -76,20 +74,13 @@ export class AnalyticsPage extends Component {
       data.hours[hour] = data.hours[hour] || 0;
       data.hours[hour]++;
 
-      data.langs[tweet.lang] = data.langs[tweet.lang] || 0;
-      data.langs[tweet.lang]++;
+      if (+tweet.favorite_count < 10) {
+        data.favorites[+tweet.favorite_count]++;
+      }
 
-      data.favorites[tweet.favorite_count] = data.favorites[tweet.favorite_count] || 0;
-      data.favorites[tweet.favorite_count]++;
-
-      data.retweets[tweet.retweet_count] = data.retweets[tweet.retweet_count] || 0;
-      data.retweets[tweet.retweet_count]++;
-
-      data.users.followers[tweet.user.followers_count] = data.users.followers[tweet.user.followers_count] || 0;
-      data.users.followers[tweet.user.followers_count]++;
-
-      data.users.following[tweet.user.friends_count] = data.users.following[tweet.user.friends_count] || 0;
-      data.users.following[tweet.user.friends_count]++;
+      if (+tweet.retweet_count < 10) {
+        data.retweets[+tweet.retweet_count]++;
+      }
 
       if (tweet.user.verified) {
         data.users.verified++;
@@ -99,12 +90,6 @@ export class AnalyticsPage extends Component {
         data.tweetsWithGeo.push(tweet);
       }
     });
-
-    // If "und" (undefined) key is defined, rename it for "unknown".
-    if (typeof data.langs.und !== 'undefined') {
-      data.langs.unknown = data.langs.und;
-      delete data.langs.und;
-    }
 
     // Calculate rates
     data.users.verifiedRate = utils.truncate(data.users.verified / window.tweets.length * 100, 2);
@@ -121,6 +106,10 @@ export class AnalyticsPage extends Component {
         });
       }, 1000 * 10);
     }
+  }
+
+  formatDataToGraph(data, x, y) {
+    return data.map((value, index) => ({[x]: index, [y]: value}));
   }
 
   getAnalyticsData() {
@@ -162,19 +151,33 @@ export class AnalyticsPage extends Component {
         </div>
 
         <div className={ 'analyticsContainer ' + (!this.state.showMap ? 'full' : '') }>
-          <div className="row">
+          <div className="row -numbers">
             <div className="cell">User verified: { this.state.analytics.users.verifiedRate }%</div>
             <div className="cell">Tweets analized: { this.state.analytics.tweetsCount }</div>
             <div className="cell">Tweets with geolocation: { this.state.analytics.tweetsWithGeoRate }%</div>
           </div>
 
-          <div className="row">
-            <div className="cell">{JSON.stringify(this.state.analytics.favorites)} & {JSON.stringify(this.state.analytics.retweets)}<br/>grafico de lineas verticales (1 para 2)</div>
+          <div className="row -graphs">
+            <div className="cell">
+              <VictoryChart theme={VictoryTheme.material}>
+
+                <VictoryLine
+                  data={this.formatDataToGraph(this.state.analytics.retweets, 'x', 'y')}
+                  theme={VictoryTheme.material}/>
+
+                <VictoryLine
+                  data={this.formatDataToGraph(this.state.analytics.favorites, 'x', 'y')}
+                  theme={VictoryTheme.material}/>
+
+                <VictoryLegend
+                  data={[{ name: 'Retweets' }, { name: 'Favorites' }]}/>
+              </VictoryChart>
+            </div>
+
             <div className="cell">{
-                Object.keys(this.state.analytics.hours).map((hour) => `${hour}hs: ${this.state.analytics.hours[hour]},`)
-            }<br/>grafico de circulos</div>
-            <div className="cell">{JSON.stringify(this.state.analytics.langs)}<br/>graficos de barra horizontales</div>
-            <div className="cell">{JSON.stringify(this.state.analytics.users.followers)} & {JSON.stringify(this.state.analytics.users.following)}<br/>grafico de lineas verticales (1 para 2)</div>
+                Object.keys(this.state.analytics.hours).map((hour) => `${hour}hs: ${this.state.analytics.hours[hour]},`)}
+                <br/>grafico de circulos
+            </div>
           </div>
         </div>
 

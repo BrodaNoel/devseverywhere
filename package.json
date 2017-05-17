@@ -14,7 +14,8 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "victory": "^0.19.1"
   },
   "devDependencies": {
     "node-sass": "^4.5.2",
