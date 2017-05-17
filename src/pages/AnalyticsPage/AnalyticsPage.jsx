@@ -28,7 +28,7 @@ export class AnalyticsPage extends Component {
       tech: props.match.params.tech,
       showMap: false,
       analytics: {
-        hours: {},
+        hours: [],
         favorites: [],
         retweets: [],
         users: {
@@ -58,7 +58,7 @@ export class AnalyticsPage extends Component {
 
   calculateAnalytics() {
     var data = {
-      hours: {},
+      hours: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       favorites: [0,0,0,0,0,0,0,0,0,0],
       retweets: [0,0,0,0,0,0,0,0,0,0],
       users: {
@@ -71,7 +71,6 @@ export class AnalyticsPage extends Component {
 
     window.tweets.forEach((tweet) => {
       let hour = new Date(tweet.created_at).getUTCHours();
-      data.hours[hour] = data.hours[hour] || 0;
       data.hours[hour]++;
 
       if (+tweet.favorite_count < 10) {
@@ -160,7 +159,6 @@ export class AnalyticsPage extends Component {
           <div className="row -graphs">
             <div className="cell">
               <VictoryChart theme={VictoryTheme.material}>
-
                 <VictoryLine
                   data={this.formatDataToGraph(this.state.analytics.retweets, 'x', 'y')}
                   theme={VictoryTheme.material}/>
@@ -174,9 +172,15 @@ export class AnalyticsPage extends Component {
               </VictoryChart>
             </div>
 
-            <div className="cell">{
-                Object.keys(this.state.analytics.hours).map((hour) => `${hour}hs: ${this.state.analytics.hours[hour]},`)}
-                <br/>grafico de circulos
+            <div className="cell">
+              <VictoryChart theme={VictoryTheme.material}>
+                <VictoryLine
+                  data={this.formatDataToGraph(this.state.analytics.hours, 'x', 'y')}
+                  theme={VictoryTheme.material}/>
+
+                <VictoryLegend
+                  data={[{ name: 'UTC hours' }]}/>
+              </VictoryChart>
             </div>
           </div>
         </div>
