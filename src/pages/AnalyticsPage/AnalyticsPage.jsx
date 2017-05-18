@@ -19,8 +19,6 @@ export class AnalyticsPage extends Component {
     zoom: 0
   };
 
-  isDone = false;
-
   constructor(props) {
     super(props);
 
@@ -49,14 +47,7 @@ export class AnalyticsPage extends Component {
       this.props.history.push(`/request-access/twitter/${card.name}`);
     } else {
       this.props.history.push(`/${card.name}`);
-      this.restartAnalytics(card);
-      this.showAnalytics();
     }
-  }
-
-  restartAnalytics(card) {
-    window.tweets = [];
-    this.analytics = {};
   }
 
   calculateAnalytics() {
@@ -75,7 +66,7 @@ export class AnalyticsPage extends Component {
       }
     };
 
-    window.tweets.forEach((tweet) => {
+    window.selectedCard.tweets.forEach((tweet) => {
       let hour = new Date(tweet.created_at).getUTCHours();
       data.hours[hour]++;
 
@@ -100,19 +91,19 @@ export class AnalyticsPage extends Component {
     });
 
     // Calculate rates
-    data.users.verifiedRate = utils.truncate(data.users.verified / window.tweets.length * 100, 2);
-    data.tweetsWithGeoRate = utils.truncate(data.tweetsWithGeo.length / window.tweets.length * 100, 2);
+    data.users.verifiedRate = utils.truncate(data.users.verified / window.selectedCard.tweets.length * 100, 2);
+    data.tweetsWithGeoRate = utils.truncate(data.tweetsWithGeo.length / window.selectedCard.tweets.length * 100, 2);
 
-    data.tweetsCount = window.tweets.length;
+    data.tweetsCount = window.selectedCard.tweets.length;
 
     this.setState({
       analytics: data,
       showMap: data.map.points.length > 0
     });
 
-    if (!this.isDone) {
+    if (!window.selectedCard.isDone) {
       setTimeout(() => {
-        this.getAnalyticsData().then(() => {
+        this.getAnalyticsData(window.selectedCard).then(() => {
           this.calculateAnalytics();
         });
       }, 1000 * 30);
@@ -123,12 +114,12 @@ export class AnalyticsPage extends Component {
     return data.map((value, index) => ({[x]: index, [y]: value}));
   }
 
-  getAnalyticsData() {
-    return backend.getTweets('#' + this.state.tech)
+  getAnalyticsData(card) {
+    return backend.getTweets('#' + card.name)
       .then(r => {
         // TODO: Remove it after Redux implementation
-        window.tweets = [...window.tweets, ...r.tweets];
-        this.isDone = r.isDone;
+        card.tweets = [...card.tweets, ...r.tweets];
+        card.isDone = r.isDone;
       });
   }
 
@@ -140,8 +131,7 @@ export class AnalyticsPage extends Component {
         window.selectedCard = window.cards.find(x => x.name === this.state.tech);
       }
 
-      window.tweets = [];
-      this.getAnalyticsData().then(() => {
+      this.getAnalyticsData(window.selectedCard).then(() => {
         this.calculateAnalytics();
       });
     }
@@ -149,7 +139,6 @@ export class AnalyticsPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({tech: nextProps.match.params.tech});
-    this.restartAnalytics(window.selectedCard);
   }
 
   render() {

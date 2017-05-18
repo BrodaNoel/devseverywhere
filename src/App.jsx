@@ -9,7 +9,6 @@ import { AnalyticsPage } from './pages/AnalyticsPage';
 document.title = 'DevsEverywhere!';
 
 // TODO: These globals vars will be removed after implementing Redux. Sorry!
-window.tweets = [];
 window.cards = [
   { name: 'ReactJS', hashtags: ['#reactJS', '#react'] },
   { name: 'AngularJS', hashtags: ['#angularjs', '#angular'] },
@@ -23,6 +22,15 @@ window.user = null;
 window.selectedCard = null;
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    // Init
+    window.cards.forEach((card) => {
+      card.tweets = [];
+      card.isDone = false;
+    });
+  }
   render() {
     return (
       <Router>
