@@ -28,9 +28,9 @@ export class AnalyticsPage extends Component {
       tech: props.match.params.tech,
       showMap: false,
       analytics: {
-        hours: [],
-        favorites: [],
-        retweets: [],
+        hours: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        favorites: [0,0,0,0,0,0,0,0,0,0],
+        retweets: [0,0,0,0,0,0,0,0,0,0],
         users: {
           verifiedRate: 0,
           geoEnabledRate: 0
@@ -115,7 +115,7 @@ export class AnalyticsPage extends Component {
         this.getAnalyticsData().then(() => {
           this.calculateAnalytics();
         });
-      }, 1000 * 2);
+      }, 1000 * 30);
     }
   }
 
