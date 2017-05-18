@@ -22,8 +22,9 @@ export class AnalyticsPage extends Component {
   constructor(props) {
     super(props);
 
+    this.changeSelectedCard(props.match.params.tech);
+
     this.state = {
-      tech: props.match.params.tech,
       showMap: false,
       analytics: {
         hours: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -101,40 +102,44 @@ export class AnalyticsPage extends Component {
       showMap: data.map.points.length > 0
     });
 
-    if (!window.selectedCard.isDone) {
-      setTimeout(() => {
-        this.getAnalyticsData(window.selectedCard).then(() => {
-          this.calculateAnalytics();
-        });
-      }, 1000 * 30);
-    }
+    setTimeout(() => {
+      this.getAnalyticsData(window.selectedCard);
+    }, 1000 * 1);
   }
 
   getAnalyticsData(card) {
-    return backend.getTweets('#' + card.name)
-      .then(r => {
-        // TODO: Remove it after Redux implementation
-        card.tweets = [...card.tweets, ...r.tweets];
-        card.isDone = r.isDone;
-      });
+    if (!card.isDone) {
+      backend.getTweets(card)
+        .then(data => {
+          // TODO: Remove it after Redux implementation
+          card.tweets = [...card.tweets, ...data.tweets];
+          card.isDone = data.isDone;
+          card.isSearching = !data.isDone;
+
+          this.calculateAnalytics();
+        });
+    }
+  }
+
+  changeSelectedCard(cardName) {
+    window.selectedCard = window.cards.find(x => x.name === cardName);
   }
 
   componentDidMount() {
     if (!window.isLoggedInTwitter) {
-      this.props.history.push(`/request-access/twitter/${this.state.tech}`);
+      this.props.history.push(`/request-access/twitter/${window.selectedCard.name}`);
     } else {
-      if (window.selectedCard === null) {
-        window.selectedCard = window.cards.find(x => x.name === this.state.tech);
+      if (!window.selectedCard.isSearching) {
+        this.getAnalyticsData(window.selectedCard);
       }
-
-      this.getAnalyticsData(window.selectedCard).then(() => {
-        this.calculateAnalytics();
-      });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({tech: nextProps.match.params.tech});
+    this.changeSelectedCard(nextProps.match.params.tech);
+    if (!window.selectedCard.isSearching) {
+      this.getAnalyticsData(window.selectedCard);
+    }
   }
 
   render() {

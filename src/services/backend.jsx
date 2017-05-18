@@ -1,42 +1,24 @@
 var num = require('big-integer');
 
-const config = {
-  twitter: {
-    count: 100
-  }
-};
-
-let isDone = false;
-let nextMax = null;
-
 // Private functions
 const _ = {
-  searchTweets(q) {
+  searchTweets(card) {
     return new Promise((done, fail) => {
+      let q = '#' + card.name;
       let tweets = [];
       let params = {
         q,
-        max: nextMax,
-        count: config.twitter.count
+        max: card.nextMax,
+        count: 100
       };
-
-      if (isDone) {
-        done({
-          tweets,
-          isDone
-        });
-        return;
-      }
 
       _.getTweetsFromBackend(q, params).then(twitterResponse => {
         tweets = twitterResponse.tweets.statuses;
-
-        isDone = twitterResponse.isDone;
-        nextMax = num(twitterResponse.metadata.min).subtract(1);
+        card.nextMax = num(twitterResponse.metadata.min).subtract(1);
 
         done({
           tweets,
-          isDone
+          isDone: twitterResponse.isDone
         });
       }).catch(fail);
     });
