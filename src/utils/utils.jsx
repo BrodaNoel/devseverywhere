@@ -50,5 +50,9 @@ export const utils = {
       lat: dataPoint.lat.min + ((dataPoint.lat.max - dataPoint.lat.min) / 2),
       lng: dataPoint.lng.min + ((dataPoint.lng.max - dataPoint.lng.min) / 2)
     };
+  },
+
+  formatDataToGraph(data, x, y) {
+    return data.map((value, index) => ({[x]: index, [y]: value}));
   }
 };

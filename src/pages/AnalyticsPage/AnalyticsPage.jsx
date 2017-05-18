@@ -110,10 +110,6 @@ export class AnalyticsPage extends Component {
     }
   }
 
-  formatDataToGraph(data, x, y) {
-    return data.map((value, index) => ({[x]: index, [y]: value}));
-  }
-
   getAnalyticsData(card) {
     return backend.getTweets('#' + card.name)
       .then(r => {
@@ -161,11 +157,11 @@ export class AnalyticsPage extends Component {
             <div className="cell">
               <VictoryChart theme={VictoryTheme.material}>
                 <VictoryLine
-                  data={this.formatDataToGraph(this.state.analytics.retweets, 'x', 'y')}
+                  data={utils.formatDataToGraph(this.state.analytics.retweets, 'x', 'y')}
                   theme={VictoryTheme.material}/>
 
                 <VictoryLine
-                  data={this.formatDataToGraph(this.state.analytics.favorites, 'x', 'y')}
+                  data={utils.formatDataToGraph(this.state.analytics.favorites, 'x', 'y')}
                   theme={VictoryTheme.material}/>
 
                 <VictoryLegend
@@ -180,7 +176,7 @@ export class AnalyticsPage extends Component {
                     x: [0, 24],
                     y: [0, Math.max(...this.state.analytics.hours) * 1.1]
                   }}
-                  data={this.formatDataToGraph(this.state.analytics.hours, 'x', 'y')}
+                  data={utils.formatDataToGraph(this.state.analytics.hours, 'x', 'y')}
                   theme={VictoryTheme.material}/>
 
                 <VictoryLegend
