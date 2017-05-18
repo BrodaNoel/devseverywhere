@@ -1,4 +1,5 @@
 export const utils = {
+  // Just truncate a numner
   truncate(number, digits) {
     const multiplier = Math.pow(10, digits);
     const adjustedNum = number * multiplier;
@@ -6,6 +7,10 @@ export const utils = {
     return truncatedNum / multiplier;
   },
 
+  // Twitter API give us a "place" value, that contains 4 arrays.
+  // Each of those arrays are: [lng, lat], so, those are 4 points.
+  // This function return the middle point of that rectangule.
+  // More info: https://dev.twitter.com/overview/api/places
   getMapPoint(coors) {
     let dataPoint = {
       lng: {
