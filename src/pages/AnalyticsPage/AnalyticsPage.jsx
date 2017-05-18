@@ -36,7 +36,10 @@ export class AnalyticsPage extends Component {
           geoEnabledRate: 0
         },
         tweetsWithGeoRate: 0,
-        tweetsCount: 0
+        tweetsCount: 0,
+        map: {
+          points: []
+        }
       }
     };
   }
@@ -66,7 +69,10 @@ export class AnalyticsPage extends Component {
         verifiedRate: 0
       },
       tweetsWithGeo: [],
-      tweetsWithGeoRate: 0
+      tweetsWithGeoRate: 0,
+      map: {
+        points: []
+      }
     };
 
     window.tweets.forEach((tweet) => {
@@ -87,6 +93,9 @@ export class AnalyticsPage extends Component {
 
       if (tweet.coordinates || tweet.place) {
         data.tweetsWithGeo.push(tweet);
+        data.map.points.push(
+          utils.getMapPoint(tweet.place.bounding_box.coordinates[0])
+        );
       }
     });
 
@@ -96,14 +105,17 @@ export class AnalyticsPage extends Component {
 
     data.tweetsCount = window.tweets.length;
 
-    this.setState({analytics: data});
+    this.setState({
+      analytics: data,
+      showMap: data.map.points.length > 0
+    });
 
     if (!this.isDone) {
       setTimeout(() => {
         this.getAnalyticsData().then(() => {
           this.calculateAnalytics();
         });
-      }, 1000 * 10);
+      }, 1000 * 2);
     }
   }
 
@@ -175,6 +187,10 @@ export class AnalyticsPage extends Component {
             <div className="cell">
               <VictoryChart theme={VictoryTheme.material}>
                 <VictoryLine
+                  domain={{
+                    x: [0, 24],
+                    y: [0, Math.max(...this.state.analytics.hours) * 1.1]
+                  }}
                   data={this.formatDataToGraph(this.state.analytics.hours, 'x', 'y')}
                   theme={VictoryTheme.material}/>
 
@@ -192,7 +208,8 @@ export class AnalyticsPage extends Component {
               defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
               bootstrapURLKeys={{key: 'AIzaSyCzNy8leybwmkQbAFEvRCzRIB29YOlN0Ww'}}>
-              <IconMap lat={10} lng={-35} />
+
+              {this.state.analytics.map.points.map((point, index) => <IconMap key={index} {...point} />)}
             </GoogleMapReact>
           </div>
         }
