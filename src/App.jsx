@@ -29,7 +29,6 @@ class App extends Component {
     window.cards.forEach((card) => {
       card.tweets = [];
       card.isDone = false;
-      card.isSearching = false;
       card.nextMax = null;
     });
   }

@@ -19,6 +19,8 @@ export class AnalyticsPage extends Component {
     zoom: 0
   };
 
+  intervalId = 0;
+
   constructor(props) {
     super(props);
 
@@ -101,10 +103,6 @@ export class AnalyticsPage extends Component {
       analytics: data,
       showMap: data.map.points.length > 0
     });
-
-    setTimeout(() => {
-      this.getAnalyticsData(window.selectedCard);
-    }, 1000 * 1);
   }
 
   getAnalyticsData(card) {
@@ -114,9 +112,11 @@ export class AnalyticsPage extends Component {
           // TODO: Remove it after Redux implementation
           card.tweets = [...card.tweets, ...data.tweets];
           card.isDone = data.isDone;
-          card.isSearching = !data.isDone;
 
-          this.calculateAnalytics();
+          // If the card we just get data still selected, let's show its data
+          if (card.name === window.selectedCard.name) {
+            this.calculateAnalytics();
+          }
         });
     }
   }
@@ -129,17 +129,23 @@ export class AnalyticsPage extends Component {
     if (!window.isLoggedInTwitter) {
       this.props.history.push(`/request-access/twitter/${window.selectedCard.name}`);
     } else {
-      if (!window.selectedCard.isSearching) {
-        this.getAnalyticsData(window.selectedCard);
-      }
+      this.getAnalyticsData(window.selectedCard);
+      this.calculateAnalytics();
+      this.intervalId = setInterval(() => {this.getAnalyticsData(window.selectedCard)}, 5000);
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    clearTimeout(this.intervalId);
     this.changeSelectedCard(nextProps.match.params.tech);
-    if (!window.selectedCard.isSearching) {
-      this.getAnalyticsData(window.selectedCard);
-    }
+
+    this.getAnalyticsData(window.selectedCard);
+    this.calculateAnalytics();
+    this.intervalId = setInterval(() => {this.getAnalyticsData(window.selectedCard)}, 5000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.intervalId);
   }
 
   render() {

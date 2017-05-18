@@ -2,7 +2,7 @@ var num = require('big-integer');
 
 // Private functions
 const _ = {
-  searchTweets(card) {
+  getTweets(card) {
     return new Promise((done, fail) => {
       let q = '#' + card.name;
       let tweets = [];
@@ -36,5 +36,5 @@ const _ = {
 
 // Exposing
 export const backend = {
-  getTweets: _.searchTweets
+  getTweets: _.getTweets
 };
