@@ -4,7 +4,7 @@ var num = require('big-integer');
 const _ = {
   getTweets(card, credentials) {
     return new Promise((done, fail) => {
-      let q = '#' + card.name;
+      let q = card.hashtags.join(' OR ');
       let tweets = [];
       let params = {
         q,
