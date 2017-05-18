@@ -107,7 +107,7 @@ export class AnalyticsPage extends Component {
 
   getAnalyticsData(card) {
     if (!card.isDone) {
-      backend.getTweets(card)
+      backend.getTweets(card, { key: window.credentials.accessToken, secret: window.credentials.secret })
         .then(data => {
           // TODO: Remove it after Redux implementation
           card.tweets = [...card.tweets, ...data.tweets];
