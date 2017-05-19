@@ -37,6 +37,9 @@ export class RequestAccessPage extends Component {
       cookies.set('credentials', result.credential);
       window.isLoggedInTwitter = true;
       window.user = result.user;
+      result.user.getToken().then(token => {
+        cookies.set('firebaseToken', token);
+      });
 
       this.setState({buttonLabel: 'Redirecting...'});
       setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);

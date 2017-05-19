@@ -5,6 +5,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { VictoryChart, VictoryLegend, VictoryTheme, VictoryLine } from 'victory';
+import cookies from 'js-cookie';
 
 import { IconMap } from '../../components/IconMap';
 import { CardSelection } from '../../components/CardSelection';
@@ -107,17 +108,23 @@ export class AnalyticsPage extends Component {
 
   getAnalyticsData(card) {
     if (!card.isDone) {
-      backend.getTweets(card, { key: window.credentials.accessToken, secret: window.credentials.secret })
-        .then(data => {
-          // TODO: Remove it after Redux implementation
-          card.tweets = [...card.tweets, ...data.tweets];
-          card.isDone = data.isDone;
+      backend.getTweets(
+        card,
+        {
+          key: window.credentials.accessToken,
+          secret: window.credentials.secret
+        },
+        cookies.get('firebaseToken')
+      ).then(data => {
+        // TODO: Remove it after Redux implementation
+        card.tweets = [...card.tweets, ...data.tweets];
+        card.isDone = data.isDone;
 
-          // If the card we just get data still selected, let's show its data
-          if (card.name === window.selectedCard.name) {
-            this.calculateAnalytics();
-          }
-        });
+        // If the card we just get data still selected, let's show its data
+        if (card.name === window.selectedCard.name) {
+          this.calculateAnalytics();
+        }
+      });
     }
   }
 
