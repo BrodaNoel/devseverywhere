@@ -21,7 +21,7 @@ export class RequestAccessPage extends Component {
     this.setState({buttonLabel: 'Requesting Access...'});
 
     firebase.initializeApp({
-      apiKey: "AIzaSyCzNy8leybwmkQbAFEvRCzRIB29YOlN0Ww",
+      apiKey: "AIzaSyA2Otz1y4RZn2IvfNgGJiO6qSHaXqlEReQ",
       authDomain: "devseverywhere-1494347271845.firebaseapp.com",
       databaseURL: "https://devseverywhere-1494347271845.firebaseio.com",
       projectId: "devseverywhere-1494347271845",
