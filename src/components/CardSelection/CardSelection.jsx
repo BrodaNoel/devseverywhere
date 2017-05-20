@@ -12,7 +12,8 @@ export const CardSelection = (props) => (
             key={card.name}
             onClick={() => {props.onCardClick(card)}}
             name={card.name}
-            icon={card.icon} />
+            icon={card.icon}
+            styles={card.styles} />
         );
       })
     }

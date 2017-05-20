@@ -11,10 +11,30 @@ import { icons } from './implementation/img';
 
 // TODO: These globals vars will be removed after implementing Redux. Sorry!
 window.cards = [
-  { name: 'ReactJS', hashtags: ['#reactJS', '#react'], icon: icons.reactjs },
-  { name: 'AngularJS', hashtags: ['#angularjs', '#angular'], icon: icons.angularjs },
-  { name: 'VueJS', hashtags: ['#vuejs', '#vue'], icon: icons.vuejs },
-  { name: 'EmberJS', hashtags: ['#emberjs', '#ember'], icon: icons.emberjs }
+  {
+    name: 'ReactJS',
+    hashtags: ['#reactJS', '#react'],
+    icon: icons.reactjs,
+    styles: { backgroundColor: '#222', color: '#484848' }
+  },
+  {
+    name: 'AngularJS',
+    hashtags: ['#angularjs', '#angular'],
+    icon: icons.angularjs,
+    styles: { backgroundColor: '#263238', color: '#000' }
+  },
+  {
+    name: 'VueJS',
+    hashtags: ['#vuejs', '#vue'],
+    icon: icons.vuejs,
+    styles: { backgroundColor: '#FFF', color: '#2C3E50' }
+  },
+  {
+    name: 'EmberJS',
+    hashtags: ['#emberjs', '#ember'],
+    icon: icons.emberjs,
+    styles: { backgroundColor: '#F8EFEC', color: '#141413' }
+  }
 ];
 // Firebase data
 window.credentials = cookies.getJSON('credentials') || null;

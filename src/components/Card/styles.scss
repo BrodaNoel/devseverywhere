@@ -3,8 +3,8 @@
 .Card {
   position: relative;
   margin: 5px;
-  border: 1px solid $color-secondary;
   cursor: pointer;
+  overflow: hidden;
 
   display: flex;
   justify-content: center;
@@ -12,8 +12,8 @@
 
   flex-grow: 1;
 
-  .icon {
-    $iconSize: 40px;
+  > .icon {
+    $iconSize: 200px;
     width: $iconSize;
     height: $iconSize;
     background-size: cover;
