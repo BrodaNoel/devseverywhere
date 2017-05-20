@@ -34,10 +34,11 @@ export class AnalyticsPage extends Component {
         favorites: [0,0,0,0,0,0,0,0,0,0],
         retweets: [0,0,0,0,0,0,0,0,0,0],
         users: {
-          verifiedRate: 0,
-          geoEnabledRate: 0
+          verified: 0,
+          verifiedRate: 0
         },
         tweetsWithGeoRate: 0,
+        tweetsWithGeo: [],
         tweetsCount: 0,
         map: {
           points: []
@@ -166,9 +167,18 @@ export class AnalyticsPage extends Component {
 
         <div className={ 'analyticsContainer ' + (!this.state.showMap ? 'full' : '') }>
           <div className="row -numbers">
-            <div className="cell">User verified: { this.state.analytics.users.verifiedRate }%</div>
-            <div className="cell">Tweets analized: { this.state.analytics.tweetsCount }</div>
-            <div className="cell">Tweets with geolocation: { this.state.analytics.tweetsWithGeoRate }%</div>
+            <div className="cell">
+              { this.state.analytics.users.verified } user verified ({ this.state.analytics.users.verifiedRate }%)
+            </div>
+
+            <div className="cell" title="We are processing all tweets from last week">
+              { this.state.analytics.tweetsCount } tweets were analized<br/>
+              { window.selectedCard.isDone ? 'Process finished.' : 'Getting more tweets...' }
+            </div>
+
+            <div className="cell">
+              { this.state.analytics.tweetsWithGeo.length } tweets with geolocation ({ this.state.analytics.tweetsWithGeoRate }%)
+            </div>
           </div>
 
           <div className="row -graphs">
