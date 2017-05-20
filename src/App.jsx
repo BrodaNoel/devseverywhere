@@ -5,8 +5,7 @@ import cookies from 'js-cookie';
 import { CardSelectionPage } from './pages/CardSelectionPage';
 import { RequestAccessPage } from './pages/RequestAccessPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
-
-document.title = 'DevsEverywhere!';
+import { withGA } from './HOCs/withGA';
 
 // TODO: These globals vars will be removed after implementing Redux. Sorry!
 window.cards = [
@@ -32,13 +31,14 @@ class App extends Component {
       card.nextMax = null;
     });
   }
+
   render() {
     return (
       <Router>
         <div>
-          <Route exact path="/" component={CardSelectionPage} />
-          <Route exact path="/request-access/:social/:tech" component={RequestAccessPage} />
-          <Route exact path="/:tech" component={AnalyticsPage}/>
+          <Route exact path="/" component={withGA(CardSelectionPage)} />
+          <Route exact path="/request-access/:social/:tech" component={withGA(RequestAccessPage)} />
+          <Route exact path="/:tech" component={withGA(AnalyticsPage)}/>
         </div>
       </Router>
     );
