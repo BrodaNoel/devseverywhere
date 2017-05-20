@@ -1,2 +1,0 @@
-# devseverywhere
-Just something funny
