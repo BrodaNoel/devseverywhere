@@ -15,25 +15,25 @@ window.cards = [
     name: 'ReactJS',
     hashtags: ['#reactJS', '#react'],
     icon: icons.reactjs,
-    styles: { backgroundColor: '#222', color: '#484848' }
+    styles: { backgroundColor: '#222', color: '#FFF' }
   },
   {
     name: 'AngularJS',
     hashtags: ['#angularjs', '#angular'],
     icon: icons.angularjs,
-    styles: { backgroundColor: '#263238', color: '#000' }
+    styles: { backgroundColor: '#263238', color: '#FFF' }
   },
   {
     name: 'VueJS',
     hashtags: ['#vuejs', '#vue'],
     icon: icons.vuejs,
-    styles: { backgroundColor: '#FFF', color: '#2C3E50' }
+    styles: { backgroundColor: '#FFF', color: '#000' }
   },
   {
     name: 'EmberJS',
     hashtags: ['#emberjs', '#ember'],
     icon: icons.emberjs,
-    styles: { backgroundColor: '#F8EFEC', color: '#141413' }
+    styles: { backgroundColor: '#F8EFEC', color: '#000' }
   }
 ];
 // Firebase data
