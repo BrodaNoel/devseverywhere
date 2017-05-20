@@ -22,3 +22,8 @@ If you need something, you know what you have to do.
 * Add `dev.devseverywhere.com` in your `host` file (pointing to 127.0.0.1)
 * `npm run start`
 * Code!
+
+> Note: You'll find more information in `EnvironmentDocumentation.md` file.
+
+# Pending things
+Check the [issues tab](https://github.com/BrodaNoel/devseverywhere/issues) to see what's coming.
