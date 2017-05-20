@@ -10,7 +10,7 @@ export const withGA = (WrappedComponent) => {
   };
 
   const HOC = (props) => {
-    trackPage(window.location.pathname);
+    trackPage(props.location.pathname);
 
     return (
       <WrappedComponent {...props} />
