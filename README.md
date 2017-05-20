@@ -2,7 +2,17 @@
 
 This is just... something for fun. You can test it in [devseverywhere.com](https://devseverywhere.com).
 
-It's just a project to start working with some yerbas like #ReactJS, #GoogleMaps, #Redux, #Firebase, and more.
+This project was created to understand better:
+* ES6
+* ReactJS
+* GoogleMapsAPI
+* TwitterAPI
+* Redux (pending)
+* Webpack
+* Firebase Functions
+* Firebase Hosting
+* Firebase Auth
+* and more.
 
 If you need something, you know what you have to do.
 
