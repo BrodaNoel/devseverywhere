@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import cookies from 'js-cookie';
 
-import { CardSelectionPage } from './pages/CardSelectionPage';
-import { RequestAccessPage } from './pages/RequestAccessPage';
-import { AnalyticsPage } from './pages/AnalyticsPage';
-import { withGA } from './HOCs/withGA';
+import { CardSelectionPage } from 'pages/CardSelectionPage';
+import { RequestAccessPage } from 'pages/RequestAccessPage';
+import { AnalyticsPage } from 'pages/AnalyticsPage';
+import { withGA } from 'HOCs/withGA';
 
-import { icons } from './implementation/img';
+import { icons } from 'implementation/img';
 
 // TODO: These globals vars will be removed after implementing Redux. Sorry!
 window.cards = [

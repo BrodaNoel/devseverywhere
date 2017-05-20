@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-import { Card } from '../Card';
+import { Card } from 'components/Card';
 
 export const CardSelection = (props) => (
   <div className="CardSelection">

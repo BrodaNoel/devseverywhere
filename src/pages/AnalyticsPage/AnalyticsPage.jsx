@@ -7,11 +7,11 @@ import GoogleMapReact from 'google-map-react';
 import { VictoryChart, VictoryLegend, VictoryTheme, VictoryLine } from 'victory';
 import cookies from 'js-cookie';
 
-import { IconMap } from '../../components/IconMap';
-import { CardSelection } from '../../components/CardSelection';
+import { IconMap } from 'components/IconMap';
+import { CardSelection } from 'components/CardSelection';
 
-import { backend } from '../../services';
-import { utils } from '../../utils';
+import { backend } from 'services';
+import { utils } from 'utils';
 import './styles.css';
 
 export class AnalyticsPage extends Component {
