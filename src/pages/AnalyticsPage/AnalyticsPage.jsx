@@ -226,7 +226,7 @@ export class AnalyticsPage extends Component {
             <GoogleMapReact
               defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
-              bootstrapURLKeys={{key: 'AIzaSyCzNy8leybwmkQbAFEvRCzRIB29YOlN0Ww'}}>
+              bootstrapURLKeys={{key: 'AIzaSyA2Otz1y4RZn2IvfNgGJiO6qSHaXqlEReQ'}}>
 
               {this.state.analytics.map.points.map((point, index) => <IconMap key={index} {...point} />)}
             </GoogleMapReact>
