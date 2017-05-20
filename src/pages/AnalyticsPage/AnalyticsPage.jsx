@@ -159,6 +159,8 @@ export class AnalyticsPage extends Component {
   render() {
     return (
       <div className="AnalyticsPage">
+        <a className="gitHubIcon" href="https://github.com/BrodaNoel/devseverywhere" target="_blank"></a>
+
         <div className="cardSelectionContainer">
           <CardSelection
             cards={window.cards}
