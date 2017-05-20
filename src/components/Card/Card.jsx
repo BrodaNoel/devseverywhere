@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './styles.css';
 
-export class Card extends Component {
-  render() {
-    return (
-      <div className="Card" onClick={this.props.onClick}>
-        {this.props.name}
-      </div>
-    );
-  }
-};
+export const Card = (props) => (
+  <div className="Card" onClick={props.onClick}>
+    {props.name}
+  </div>
+);
