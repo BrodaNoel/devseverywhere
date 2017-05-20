@@ -7,12 +7,14 @@ import { RequestAccessPage } from './pages/RequestAccessPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { withGA } from './HOCs/withGA';
 
+import { icons } from './implementation/img';
+
 // TODO: These globals vars will be removed after implementing Redux. Sorry!
 window.cards = [
-  { name: 'ReactJS', hashtags: ['#reactJS', '#react'] },
-  { name: 'AngularJS', hashtags: ['#angularjs', '#angular'] },
-  { name: 'VueJS', hashtags: ['#vuejs', '#vue'] },
-  { name: 'EmberJS', hashtags: ['#emberjs', '#ember'] }
+  { name: 'ReactJS', hashtags: ['#reactJS', '#react'], icon: icons.reactjs },
+  { name: 'AngularJS', hashtags: ['#angularjs', '#angular'], icon: icons.angularjs },
+  { name: 'VueJS', hashtags: ['#vuejs', '#vue'], icon: icons.vuejs },
+  { name: 'EmberJS', hashtags: ['#emberjs', '#ember'], icon: icons.emberjs }
 ];
 // Firebase data
 window.credentials = cookies.getJSON('credentials') || null;

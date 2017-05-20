@@ -1,6 +1,7 @@
 @import '../../utils/colors.scss';
 
 .Card {
+  position: relative;
   margin: 5px;
   border: 1px solid $color-secondary;
   cursor: pointer;
@@ -10,4 +11,15 @@
   align-items: center;
 
   flex-grow: 1;
+
+  .icon {
+    $iconSize: 40px;
+    width: $iconSize;
+    height: $iconSize;
+    background-size: cover;
+    position: absolute;
+    top: calc(50% - (#{$iconSize} / 2));
+    left: calc(50% - (#{$iconSize} / 2));
+    opacity: 0.2;
+  }
 }

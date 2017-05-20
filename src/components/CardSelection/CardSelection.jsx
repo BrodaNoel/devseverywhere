@@ -11,7 +11,8 @@ export const CardSelection = (props) => (
           <Card
             key={card.name}
             onClick={() => {props.onCardClick(card)}}
-            name={card.name} />
+            name={card.name}
+            icon={card.icon} />
         );
       })
     }
