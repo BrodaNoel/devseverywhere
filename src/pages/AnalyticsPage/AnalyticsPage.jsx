@@ -128,7 +128,7 @@ export class AnalyticsPage extends Component {
         }
       }).catch(response => {
         if (response.error.code === 'auth/argument-error') {
-          this.props.onError('You have to login again');
+          this.props.onError('Sorry, you have to login again');
           this.props.history.push(`/request-access/twitter/${card.name}`);
 
         } else if (typeof response.error.message !== 'undefined') {
