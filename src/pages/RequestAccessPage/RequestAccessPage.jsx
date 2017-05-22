@@ -7,6 +7,8 @@ import * as firebase from 'firebase';
 import cookies from 'js-cookie';
 import './styles.css';
 
+import { config } from 'config';
+
 export class RequestAccessPage extends Component {
   tech = this.props.match.params.tech;
 
@@ -20,14 +22,7 @@ export class RequestAccessPage extends Component {
   requestTwitterAccess = () => {
     this.setState({buttonLabel: 'Requesting Access...'});
 
-    firebase.initializeApp({
-      apiKey: "AIzaSyA2Otz1y4RZn2IvfNgGJiO6qSHaXqlEReQ",
-      authDomain: "devseverywhere-1494347271845.firebaseapp.com",
-      databaseURL: "https://devseverywhere-1494347271845.firebaseio.com",
-      projectId: "devseverywhere-1494347271845",
-      storageBucket: "devseverywhere-1494347271845.appspot.com",
-      messagingSenderId: "381039458264"
-    });
+    firebase.initializeApp(config.firebase);
 
     var provider = new firebase.auth.TwitterAuthProvider();
 

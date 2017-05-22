@@ -12,6 +12,7 @@ This project was created to understand better:
 * Firebase Functions
 * Firebase Hosting
 * Firebase Auth
+* Victory graphs
 * and more.
 
 If you need something, you know what you have to do.

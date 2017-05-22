@@ -12,6 +12,7 @@ import { CardSelection } from 'components/CardSelection';
 
 import { backend } from 'services';
 import { utils } from 'utils';
+import { config } from 'config';
 import './styles.css';
 
 export class AnalyticsPage extends Component {
@@ -226,7 +227,7 @@ export class AnalyticsPage extends Component {
             <GoogleMapReact
               defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
-              bootstrapURLKeys={{key: 'AIzaSyA2Otz1y4RZn2IvfNgGJiO6qSHaXqlEReQ'}}>
+              bootstrapURLKeys={{key: config.googleMaps.apiKey}}>
 
               {this.state.analytics.map.points.map((point, index) => <IconMap key={index} {...point} />)}
             </GoogleMapReact>

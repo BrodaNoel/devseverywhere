@@ -1,3 +1,4 @@
+import { config } from 'config';
 var num = require('big-integer');
 
 // Private functions
@@ -15,25 +16,25 @@ const _ = {
         Authorization: 'Bearer ' + token
       };
 
-      _.getTweetsFromBackend(q, params, credentials, headers).then(twitterResponse => {
-        tweets = twitterResponse.tweets.statuses;
-        card.nextMax = num(twitterResponse.metadata.min).subtract(1);
+      _.getTweetsFromBackend(q, params, credentials, headers).then(response => {
+        tweets = response.tweets.statuses;
+        card.nextMax = num(response.metadata.min).subtract(1);
 
         done({
           tweets,
-          isDone: twitterResponse.isDone
+          isDone: response.isDone
         });
       }).catch(fail);
     });
   },
 
   getTweetsFromBackend(q, params, post, headers) {
-    let url = 'https://us-central1-devseverywhere-1494347271845.cloudfunctions.net/api/getTweets';
+    let url = config.backend.endpoints.getTweets.url;
     url += `?q=${encodeURIComponent(q)}&max=${params.max}&count=${params.count}`;
 
     return fetch(url, {
       headers,
-      method: 'POST',
+      method: config.backend.endpoints.getTweets.method,
       body: JSON.stringify(post)
     }).then(r => r.json())
   }
