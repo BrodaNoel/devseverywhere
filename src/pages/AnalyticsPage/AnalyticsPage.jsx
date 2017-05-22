@@ -154,7 +154,7 @@ export class AnalyticsPage extends Component {
     } else {
       this.getAnalyticsData(window.selectedCard);
       this.calculateAnalytics();
-      this.intervalId = setInterval(() => {this.getAnalyticsData(window.selectedCard)}, 10000);
+      this.intervalId = setInterval(() => {this.getAnalyticsData(window.selectedCard)}, config.searchTweetsEvery);
     }
   }
 
@@ -164,7 +164,7 @@ export class AnalyticsPage extends Component {
 
     this.getAnalyticsData(window.selectedCard);
     this.calculateAnalytics();
-    this.intervalId = setInterval(() => {this.getAnalyticsData(window.selectedCard)}, 10000);
+    this.intervalId = setInterval(() => {this.getAnalyticsData(window.selectedCard)}, config.searchTweetsEvery);
   }
 
   componentWillUnmount() {

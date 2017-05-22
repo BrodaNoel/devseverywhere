@@ -4,6 +4,7 @@ import vuejs from './icons/vuejs.png';
 import emberjs from './icons/emberjs.png';
 
 export const config = {
+  searchTweetsEvery: 1000 * 8, // 8 seconds
   cards: [
     {
       name: 'ReactJS',
