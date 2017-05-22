@@ -5,6 +5,7 @@ import cookies from 'js-cookie';
 import { CardSelectionPage } from 'pages/CardSelectionPage';
 import { RequestAccessPage } from 'pages/RequestAccessPage';
 import { AnalyticsPage } from 'pages/AnalyticsPage';
+import { ErrorMessage } from 'components/ErrorMessage';
 import { withGA } from 'HOCs/withGA';
 
 import { config } from 'config';
@@ -19,6 +20,10 @@ window.user = null;
 window.selectedCard = null;
 
 class App extends Component {
+  state = {
+    errors: []
+  };
+
   constructor(props) {
     super(props);
 
@@ -27,6 +32,16 @@ class App extends Component {
       card.tweets = [];
       card.isDone = false;
       card.nextMax = null;
+    });
+
+    this.state = {
+      errors: []
+    };
+  }
+
+  onError = (error) => {
+    this.setState({
+      errors: [error]
     });
   }
 
