@@ -12,7 +12,7 @@ This project was created to understand better:
 * Firebase Functions
 * Firebase Hosting
 * Firebase Auth
-* Victory graphs
+* Victory Graphs
 * and more.
 
 If you need something, you know what you have to do.
@@ -25,6 +25,10 @@ If you need something, you know what you have to do.
 * Code!
 
 > Note: You'll find more information in `EnvironmentDocumentation.md` file.
+
+# Implementing
+If you want to implement this site with your own configurations, cards, ApiKeys, etc, just edit the `src/config/index.jsx` file.
+Everything should work fine... At least, that's what I'm trying.
 
 # Pending things
 Check the [issues tab](https://github.com/BrodaNoel/devseverywhere/issues) to see what's coming.
