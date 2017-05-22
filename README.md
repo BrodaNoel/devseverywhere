@@ -5,6 +5,7 @@ This is just... something for fun. You can test it in [devseverywhere.com](https
 This project was created to understand better:
 * ES6
 * ReactJS
+* Jest
 * GoogleMapsAPI
 * TwitterAPI
 * Redux (pending)
