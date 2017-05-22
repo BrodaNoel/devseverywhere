@@ -59,7 +59,7 @@ export const utils = {
   fetchResponseHandler(response) {
     return response.text().then(text => {
       try {
-        var data = JSON.parse(text);
+        let data = JSON.parse(text);
 
         if (response.status === 200) {
           return data;

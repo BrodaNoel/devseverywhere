@@ -24,7 +24,7 @@ export class RequestAccessPage extends Component {
 
     firebase.initializeApp(config.firebase);
 
-    var provider = new firebase.auth.TwitterAuthProvider();
+    let provider = new firebase.auth.TwitterAuthProvider();
 
     firebase.auth().signInWithPopup(provider).then(result => {
       // TODO: Move if after implementing Redux
@@ -40,10 +40,7 @@ export class RequestAccessPage extends Component {
       setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);
 
     }).catch(error => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-
-      this.props.onError(`Looks like we had an issue while loging. Error ${errorCode}: ${errorMessage}`);
+      this.props.onError(`Looks like we had an issue while loging. Error ${error.code}: ${error.message}`);
       this.props.history.push(`/`);
     });
   }

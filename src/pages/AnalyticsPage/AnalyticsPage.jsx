@@ -57,7 +57,7 @@ export class AnalyticsPage extends Component {
   }
 
   calculateAnalytics() {
-    var data = {
+    let data = {
       hours: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       favorites: [0,0,0,0,0,0,0,0,0,0],
       retweets: [0,0,0,0,0,0,0,0,0,0],
