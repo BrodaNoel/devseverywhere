@@ -126,6 +126,20 @@ export class AnalyticsPage extends Component {
         if (card.name === window.selectedCard.name) {
           this.calculateAnalytics();
         }
+      }).catch(response => {
+        if (response.error.code === 'auth/argument-error') {
+          this.props.onError('You have to login again');
+          this.props.history.push(`/request-access/twitter/${card.name}`);
+
+        } else if (typeof response.error.message !== 'undefined') {
+          this.props.onError(`Unexpected error: ${response.error.message}`);
+
+        } else if (typeof response.error.body !== 'undefined') {
+          this.props.onError(`Backend error: ${response.error.body}`);
+
+        } else {
+          this.props.onError('WTF? Absolutely unknown error. But, in my computer is working 🤷');
+        }
       });
     }
   }

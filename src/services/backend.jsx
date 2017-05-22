@@ -1,46 +1,35 @@
 import { config } from 'config';
+import { utils } from 'utils';
 var num = require('big-integer');
 
-// Private functions
-const _ = {
+export const backend = {
   getTweets(card, credentials, token) {
-    return new Promise((done, fail) => {
-      let q = card.hashtags.join(' OR ');
-      let tweets = [];
-      let params = {
-        q,
-        max: card.nextMax,
-        count: 100
-      };
-      let headers = {
-        Authorization: 'Bearer ' + token
-      };
-
-      _.getTweetsFromBackend(q, params, credentials, headers).then(response => {
-        tweets = response.tweets.statuses;
-        card.nextMax = num(response.metadata.min).subtract(1);
-
-        done({
-          tweets,
-          isDone: response.isDone
-        });
-      }).catch(fail);
-    });
-  },
-
-  getTweetsFromBackend(q, params, post, headers) {
+    let q = card.hashtags.join(' OR ');
+    let tweets = [];
+    let params = {
+      q,
+      max: card.nextMax,
+      count: 100
+    };
+    let headers = {
+      Authorization: 'Bearer ' + token
+    };
     let url = config.backend.endpoints.getTweets.url;
     url += `?q=${encodeURIComponent(q)}&max=${params.max}&count=${params.count}`;
 
     return fetch(url, {
       headers,
       method: config.backend.endpoints.getTweets.method,
-      body: JSON.stringify(post)
-    }).then(r => r.json())
-  }
-};
+      body: JSON.stringify(credentials)
+    }).then(utils.fetchResponseHandler)
+      .then(response => {
+        tweets = response.tweets.statuses;
+        card.nextMax = num(response.metadata.min).subtract(1);
 
-// Exposing
-export const backend = {
-  getTweets: _.getTweets
+        return {
+          tweets,
+          isDone: response.isDone
+        };
+      });
+  }
 };
