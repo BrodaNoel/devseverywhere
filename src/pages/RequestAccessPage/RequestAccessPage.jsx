@@ -32,7 +32,7 @@ export class RequestAccessPage extends Component {
       cookies.set('credentials', result.credential);
       window.isLoggedInTwitter = true;
       window.user = result.user;
-      result.user.getToken().then(token => {
+      result.user.getIdToken().then(token => {
         cookies.set('firebaseToken', token);
       });
 
