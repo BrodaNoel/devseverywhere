@@ -40,14 +40,11 @@ export class RequestAccessPage extends Component {
       setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);
 
     }).catch(error => {
-      // Handle Errors here.
-      //var errorCode = error.code;
-      //var errorMessage = error.message;
-      // The email of the user's account used.
-      //var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      //var credential = error.credential;
-      // ...
+      var errorCode = error.code;
+      var errorMessage = error.message;
+
+      this.props.onError(`Looks like we had an issue while loging. Error ${errorCode}: ${errorMessage}`);
+      this.props.history.push(`/`);
     });
   }
 

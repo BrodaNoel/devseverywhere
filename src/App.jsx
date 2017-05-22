@@ -51,7 +51,7 @@ class App extends Component {
         <div className="App">
           <div className="content">
             <Route exact path="/" component={withGA(CardSelectionPage)} />
-            <Route exact path="/request-access/:social/:tech" component={withGA(RequestAccessPage)} />
+            <Route exact path="/request-access/:social/:tech" component={withGA(RequestAccessPage, {onError: this.onError})} />
             <Route exact path="/:tech" component={withGA(AnalyticsPage, {onError: this.onError})}/>
           </div>
 
