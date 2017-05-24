@@ -22,6 +22,7 @@ If you need something, you know what you have to do.
 * Fork
 * Clone
 * Add `dev.devseverywhere.com` in your `host` file (pointing to 127.0.0.1)
+* `nvm use` (or install the proper Node version shown in .nvmrc file)
 * `npm run start`
 * Code!
 
