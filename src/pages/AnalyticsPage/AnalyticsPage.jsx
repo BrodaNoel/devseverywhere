@@ -3,19 +3,21 @@
   * https://github.com/istarkov/google-map-react/blob/master/API.md
   */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import { VictoryChart, VictoryLegend, VictoryTheme, VictoryLine } from 'victory';
 import cookies from 'js-cookie';
 
 import { IconMap } from 'components/IconMap';
-import { CardSelection } from 'components/CardSelection';
+import { CardSelection } from 'containers/CardSelection';
 
+import * as actions from 'actions';
 import { backend } from 'services';
 import { utils } from 'utils';
 import { config } from 'config';
 import './styles.css';
 
-export class AnalyticsPage extends Component {
+class AnalyticsPage extends Component {
   static defaultProps = {
     center: { lat: 10, lng: -35 },
     zoom: 0
@@ -127,19 +129,25 @@ export class AnalyticsPage extends Component {
           this.calculateAnalytics();
         }
       }).catch(response => {
+        let error;
+
         if (response.error.code === 'auth/argument-error') {
-          this.props.onError('Sorry, you have to login again');
+          error = 'Sorry, you have to login again';
           this.props.history.push(`/request-access/twitter/${card.name}`);
 
         } else if (typeof response.error.message !== 'undefined') {
-          this.props.onError(`Unexpected error: ${response.error.message}`);
+          error = `Unexpected error: ${response.error.message}`;
 
         } else if (typeof response.error.body !== 'undefined') {
-          this.props.onError(`Backend error: ${response.error.body}`);
+          error = `Backend error: ${response.error.body}`;
 
         } else {
-          this.props.onError('WTF? Absolutely unknown error. But, in my computer is working 🤷');
+          error = 'WTF? Absolutely unknown error. But, in my computer is working 🤷';
         }
+
+        this.props.dispatch(
+          actions.addError(error)
+        );
       });
     }
   }
@@ -251,3 +259,7 @@ export class AnalyticsPage extends Component {
     );
   }
 };
+
+AnalyticsPage = connect()(AnalyticsPage);
+
+export { AnalyticsPage };

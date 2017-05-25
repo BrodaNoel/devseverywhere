@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { CardSelection } from 'components/CardSelection';
+import { CardSelection } from 'containers/CardSelection';
 import './styles.css';
 
 export class CardSelectionPage extends Component {

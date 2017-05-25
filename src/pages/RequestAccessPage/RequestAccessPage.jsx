@@ -3,13 +3,15 @@
 // I should create a prackage for this...
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import * as firebase from 'firebase';
 import cookies from 'js-cookie';
 import './styles.css';
 
+import * as actions from 'actions';
 import { config } from 'config';
 
-export class RequestAccessPage extends Component {
+class RequestAccessPage extends Component {
   tech = this.props.match.params.tech;
 
   constructor(props) {
@@ -40,7 +42,10 @@ export class RequestAccessPage extends Component {
       setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);
 
     }).catch(error => {
-      this.props.onError(`Looks like we had an issue while loging. Error ${error.code}: ${error.message}`);
+      this.props.dispatch(
+        actions.addError(`Looks like we had an issue while loging. Error ${error.code}: ${error.message}`)
+      );
+
       this.props.history.push(`/`);
     });
   }
@@ -63,3 +68,7 @@ export class RequestAccessPage extends Component {
     );
   }
 };
+
+RequestAccessPage = connect()(RequestAccessPage);
+
+export { RequestAccessPage };
