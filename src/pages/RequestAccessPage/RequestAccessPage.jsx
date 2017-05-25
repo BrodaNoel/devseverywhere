@@ -26,8 +26,6 @@ class RequestAccessPage extends Component {
 
     firebase.auth().signInWithPopup(provider).then(result => {
       // TODO: Move if after implementing Redux
-      window.credentials = result.credential;
-      cookies.set('credentials', result.credential);
       result.user.getIdToken().then(token => {
         cookies.set('firebaseToken', token);
       });
@@ -36,7 +34,8 @@ class RequestAccessPage extends Component {
 
       setTimeout(() => {
         let user = {
-          data: result.user
+          data: result.user,
+          credentials: result.credential
         };
 
         this.props.dispatch(

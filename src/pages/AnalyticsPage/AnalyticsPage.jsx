@@ -107,8 +107,8 @@ class AnalyticsPage extends Component {
       backend.getTweets(
         card,
         {
-          key: window.credentials.accessToken,
-          secret: window.credentials.secret
+          key: this.props.user.credentials.accessToken,
+          secret: this.props.user.credentials.secret
         },
         cookies.get('firebaseToken')
       ).then(data => {

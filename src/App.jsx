@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import cookies from 'js-cookie';
 
 import { CardSelectionPage } from 'pages/CardSelectionPage';
 import { RequestAccessPage } from 'pages/RequestAccessPage';
@@ -12,8 +11,6 @@ import { withGA } from 'HOCs/withGA';
 import * as actions from 'actions';
 import { config } from 'config';
 
-// Firebase data
-window.credentials = cookies.getJSON('credentials') || null;
 window.selectedCard = null;
 
 class App extends Component {
