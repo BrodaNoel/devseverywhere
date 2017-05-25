@@ -4,21 +4,10 @@ import { CardSelection } from 'containers/CardSelection';
 import './styles.css';
 
 export class CardSelectionPage extends Component {
-  onCardClick = (card) => {
-    if (!window.isLoggedInTwitter) {
-      this.props.history.push(`/request-access/twitter/${card.name}`);
-    } else {
-      window.selectedCard = card;
-      this.props.history.push(`/${card.name}`);
-    }
-  }
-
   render() {
     return (
       <div className="CardSelectionPage">
-        <CardSelection
-          isLoggedInTwitter={window.isLoggedInTwitter}
-          onCardClick={this.onCardClick} />
+        <CardSelection />
       </div>
     );
   }

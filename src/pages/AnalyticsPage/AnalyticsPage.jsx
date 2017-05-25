@@ -50,14 +50,6 @@ class AnalyticsPage extends Component {
     };
   }
 
-  onCardClick = (card) => {
-    if (!window.isLoggedInTwitter) {
-      this.props.history.push(`/request-access/twitter/${card.name}`);
-    } else {
-      this.props.history.push(`/${card.name}`);
-    }
-  }
-
   calculateAnalytics() {
     let data = {
       hours: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -189,8 +181,7 @@ class AnalyticsPage extends Component {
           rel="noopener noreferrer">Fork me</a>
 
         <div className="cardSelectionContainer">
-          <CardSelection
-            onCardClick={this.onCardClick} />
+          <CardSelection />
         </div>
 
         <div className={ 'analyticsContainer ' + (!this.state.showMap ? 'full' : '') }>
