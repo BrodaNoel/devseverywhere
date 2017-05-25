@@ -125,7 +125,7 @@ class AnalyticsPage extends Component {
 
         if (response.error.code === 'auth/argument-error') {
           error = 'Sorry, you have to login again';
-          this.props.history.push(`/request-access/twitter/${card.name}`);
+          this.props.history.push(`/request-access/${card.name}`);
 
         } else if (typeof response.error.message !== 'undefined') {
           error = `Unexpected error: ${response.error.message}`;
@@ -150,7 +150,7 @@ class AnalyticsPage extends Component {
 
   componentDidMount() {
     if (!window.isLoggedInTwitter) {
-      this.props.history.push(`/request-access/twitter/${window.selectedCard.name}`);
+      this.props.history.push(`/request-access/${window.selectedCard.name}`);
     } else {
       this.getAnalyticsData(window.selectedCard);
       this.calculateAnalytics();

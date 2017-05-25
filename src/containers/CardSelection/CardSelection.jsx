@@ -16,7 +16,7 @@ let CardSelection = (props) => (
               window.selectedCard = card;
 
               if (!window.isLoggedInTwitter) {
-                props.history.push(`/request-access/twitter/${card.name}`);
+                props.history.push(`/request-access/${card.name}`);
               } else {
                 props.history.push(`/${card.name}`);
               }
