@@ -14,8 +14,6 @@ import { config } from 'config';
 
 // Firebase data
 window.credentials = cookies.getJSON('credentials') || null;
-window.isLoggedInTwitter = window.credentials !== null;
-window.user = null;
 window.selectedCard = null;
 
 class App extends Component {
@@ -23,17 +21,20 @@ class App extends Component {
     super(props);
 
     // Init card array, getting it from the init-config-file.
-    let cards = config.cards;
+    // To it just if the user never was logged in the app
+    if (props.cards.length === 0) {
+      let cards = config.cards;
 
-    cards.forEach((card) => {
-      card.tweets = [];
-      card.isDone = false;
-      card.nextMax = null;
-    });
+      cards.forEach((card) => {
+        card.tweets = [];
+        card.isDone = false;
+        card.nextMax = null;
+      });
 
-    props.dispatch(
-      actions.addCards(cards)
-    );
+      props.dispatch(
+        actions.addCards(cards)
+      );
+    }
   }
 
   render() {
@@ -65,6 +66,8 @@ class App extends Component {
   }
 }
 
-App = connect()(App);
+App = connect(
+  (state) => ({cards: state.cards})
+)(App);
 
 export default App;

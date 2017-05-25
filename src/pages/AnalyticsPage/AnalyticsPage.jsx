@@ -149,7 +149,7 @@ class AnalyticsPage extends Component {
   }
 
   componentDidMount() {
-    if (!window.isLoggedInTwitter) {
+    if (!this.props.user.isLogged) {
       this.props.history.push(`/request-access/${window.selectedCard.name}`);
     } else {
       this.getAnalyticsData(window.selectedCard);
@@ -251,7 +251,10 @@ class AnalyticsPage extends Component {
 };
 
 AnalyticsPage = connect(
-  (state) => ({cards: state.cards}),
+  (state) => ({
+    cards: state.cards,
+    user: state.user
+  }),
   null
 )(AnalyticsPage);
 

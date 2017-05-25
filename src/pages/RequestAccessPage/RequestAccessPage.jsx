@@ -13,13 +13,9 @@ import { config } from 'config';
 
 class RequestAccessPage extends Component {
   tech = this.props.match.params.tech;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      buttonLabel: 'Ok!'
-    };
-  }
+  state = {
+    buttonLabel: 'Ok!'
+  };
 
   requestTwitterAccess = () => {
     this.setState({buttonLabel: 'Requesting Access...'});
@@ -32,14 +28,23 @@ class RequestAccessPage extends Component {
       // TODO: Move if after implementing Redux
       window.credentials = result.credential;
       cookies.set('credentials', result.credential);
-      window.isLoggedInTwitter = true;
-      window.user = result.user;
       result.user.getIdToken().then(token => {
         cookies.set('firebaseToken', token);
       });
 
       this.setState({buttonLabel: 'Redirecting...'});
-      setTimeout(() => {this.props.history.push(`/${this.tech}`);}, 1000);
+
+      setTimeout(() => {
+        let user = {
+          data: result.user
+        };
+
+        this.props.dispatch(
+          actions.logInUser(user)
+        );
+
+        this.props.history.push(`/${this.tech}`);
+      }, 1000);
 
     }).catch(error => {
       this.props.dispatch(

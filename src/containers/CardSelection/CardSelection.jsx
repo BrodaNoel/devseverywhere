@@ -15,7 +15,7 @@ let CardSelection = (props) => (
             onClick={() => {
               window.selectedCard = card;
 
-              if (!window.isLoggedInTwitter) {
+              if (!props.user.isLogged) {
                 props.history.push(`/request-access/${card.name}`);
               } else {
                 props.history.push(`/${card.name}`);
@@ -33,7 +33,10 @@ let CardSelection = (props) => (
 CardSelection = withRouter(CardSelection);
 
 CardSelection = connect(
-  (state) => ({cards: state.cards}),
+  (state) => ({
+    cards: state.cards,
+    user: state.user
+  }),
   null
 )(CardSelection);
 
