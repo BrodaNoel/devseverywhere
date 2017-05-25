@@ -48,7 +48,7 @@ class App extends Component {
 
             <Route
               exact
-              path="/request-access/:social/:tech"
+              path="/request-access/:tech"
               component={withGA(RequestAccessPage)} />
 
             <Route
