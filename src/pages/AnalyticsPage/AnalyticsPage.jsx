@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import { VictoryChart, VictoryLegend, VictoryTheme, VictoryLine } from 'victory';
-import cookies from 'js-cookie';
 
 import { IconMap } from 'components/IconMap';
 import { CardSelection } from 'containers/CardSelection';
@@ -110,7 +109,7 @@ class AnalyticsPage extends Component {
           key: this.props.user.credentials.accessToken,
           secret: this.props.user.credentials.secret
         },
-        cookies.get('firebaseToken')
+        this.props.user.firebaseToken
       ).then(data => {
         // TODO: Remove it after Redux implementation
         card.tweets = [...card.tweets, ...data.tweets];

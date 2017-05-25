@@ -5,7 +5,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
-import cookies from 'js-cookie';
 import './styles.css';
 
 import * as actions from 'actions';
@@ -27,23 +26,22 @@ class RequestAccessPage extends Component {
     firebase.auth().signInWithPopup(provider).then(result => {
       // TODO: Move if after implementing Redux
       result.user.getIdToken().then(token => {
-        cookies.set('firebaseToken', token);
+        this.setState({buttonLabel: 'Redirecting...'});
+
+        setTimeout(() => {
+          let user = {
+            data: result.user,
+            credentials: result.credential,
+            firebaseToken: token
+          };
+
+          this.props.dispatch(
+            actions.logInUser(user)
+          );
+
+          this.props.history.push(`/${this.tech}`);
+        }, 1000);
       });
-
-      this.setState({buttonLabel: 'Redirecting...'});
-
-      setTimeout(() => {
-        let user = {
-          data: result.user,
-          credentials: result.credential
-        };
-
-        this.props.dispatch(
-          actions.logInUser(user)
-        );
-
-        this.props.history.push(`/${this.tech}`);
-      }, 1000);
 
     }).catch(error => {
       this.props.dispatch(
