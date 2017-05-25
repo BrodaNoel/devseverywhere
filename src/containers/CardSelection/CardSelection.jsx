@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './styles.css';
 
 import { Card } from 'components/Card';
 
-export const CardSelection = (props) => (
+let CardSelection = (props) => (
   <div className="CardSelection">
     {
       props.cards.map((card) => {
@@ -19,3 +20,10 @@ export const CardSelection = (props) => (
     }
   </div>
 );
+
+CardSelection = connect(
+  (state) => ({cards: state.cards}),
+  null
+)(CardSelection);
+
+export { CardSelection };

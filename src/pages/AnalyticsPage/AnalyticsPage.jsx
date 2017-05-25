@@ -153,7 +153,7 @@ class AnalyticsPage extends Component {
   }
 
   changeSelectedCard(cardName) {
-    window.selectedCard = window.cards.find(x => x.name === cardName);
+    window.selectedCard = this.props.cards.find(x => x.name === cardName);
   }
 
   componentDidMount() {
@@ -190,7 +190,6 @@ class AnalyticsPage extends Component {
 
         <div className="cardSelectionContainer">
           <CardSelection
-            cards={window.cards}
             onCardClick={this.onCardClick} />
         </div>
 
@@ -260,6 +259,9 @@ class AnalyticsPage extends Component {
   }
 };
 
-AnalyticsPage = connect()(AnalyticsPage);
+AnalyticsPage = connect(
+  (state) => ({cards: state.cards}),
+  null
+)(AnalyticsPage);
 
 export { AnalyticsPage };

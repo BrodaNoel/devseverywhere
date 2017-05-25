@@ -17,7 +17,6 @@ export class CardSelectionPage extends Component {
     return (
       <div className="CardSelectionPage">
         <CardSelection
-          cards={window.cards}
           isLoggedInTwitter={window.isLoggedInTwitter}
           onCardClick={this.onCardClick} />
       </div>
