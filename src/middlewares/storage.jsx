@@ -1,7 +1,10 @@
 import * as utils from 'utils';
 
 const saveWhenActionIs = [
-  'LOGIN_USER'
+  'LOGIN_USER',
+  'CHANGE_SELECTED_CARD',
+  'ADD_TWEETS_TO_CARD',
+  'SET_DONE_TO_CARD'
 ];
 
 // When the action is one of x (check saveWhenActionIs array), save the state in loca storage
