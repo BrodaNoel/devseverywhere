@@ -5,11 +5,13 @@ This is just... something for fun. You can test it in [devseverywhere.com](https
 This project was created to understand better:
 * ES6
 * ReactJS
-* Jest
+  * Routing _(more info [here](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom)_
+  * Jest
+* Redux
+  * Reselect _(more info [here](http://redux.js.org/docs/recipes/ComputingDerivedData.html) and [here](https://github.com/reactjs/reselect))_
+* Webpack
 * GoogleMapsAPI
 * TwitterAPI
-* Redux (pending)
-* Webpack
 * Firebase Functions
 * Firebase Hosting
 * Firebase Auth
@@ -24,7 +26,7 @@ If you need something, you know what you have to do.
 * Add `dev.devseverywhere.com` in your `host` file (pointing to 127.0.0.1)
 * `nvm use` (or install the proper Node version shown in .nvmrc file)
 * `npm run start`
-* Code!
+* Happy coding!
 
 > Note: You'll find more information in `EnvironmentDocumentation.md` file.
 
