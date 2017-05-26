@@ -40,7 +40,7 @@ class AnalyticsPage extends Component {
 
         if (response.error.code === 'auth/argument-error') {
           error = 'Sorry, you have to login again';
-          this.props.history.push(`/request-access/${card.name}`);
+          this.props.history.push(`/request-access/${this.props.match.params.tech}`);
 
         } else if (typeof response.error.message !== 'undefined') {
           error = `Unexpected error: ${response.error.message}`;
