@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import './styles.css';
 
 import { Card } from 'components/Card';
+import * as actions from 'actions';
 
 let CardSelection = (props) => (
   <div className="CardSelection">
@@ -13,7 +14,9 @@ let CardSelection = (props) => (
           <Card
             key={card.name}
             onClick={() => {
-              window.selectedCard = card;
+              props.dispatch(
+                actions.changeSelectedCard(card)
+              );
 
               if (!props.user.isLogged) {
                 props.history.push(`/request-access/${card.name}`);
