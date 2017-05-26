@@ -24,7 +24,6 @@ class RequestAccessPage extends Component {
     let provider = new firebase.auth.TwitterAuthProvider();
 
     firebase.auth().signInWithPopup(provider).then(result => {
-      // TODO: Move if after implementing Redux
       result.user.getIdToken().then(token => {
         this.setState({buttonLabel: 'Redirecting...'});
 
