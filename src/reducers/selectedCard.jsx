@@ -1,4 +1,3 @@
-// { name, isDone }
 const selectedCard = (state = null, action) => {
   switch (action.type) {
     case 'CHANGE_SELECTED_CARD':
