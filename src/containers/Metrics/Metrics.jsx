@@ -6,7 +6,6 @@ import { VictoryChart, VictoryLegend, VictoryTheme, VictoryLine } from 'victory'
 
 import { utils } from 'utils';
 import { config } from 'config';
-import selectors from 'selectors';
 import './styles.css';
 
 let Metrics = (props) => (

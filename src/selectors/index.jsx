@@ -1,7 +1,10 @@
-import analytics from './analytics';
+// All this file is deprecated, but not removed just to leave here kind of documentation
+// in case of need to implement selectors
 
-const selectors = {
-  analytics
-};
+// import analytics from './analytics';
 
-export default selectors;
+// const selectors = {
+//   analytics
+// };
+
+// export default selectors;
