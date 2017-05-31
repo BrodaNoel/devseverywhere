@@ -1,4 +1,4 @@
-import * as utils from 'utils';
+import utils from 'utils';
 
 const saveWhenActionIs = [
   'LOGIN_USER',
@@ -8,7 +8,7 @@ const saveWhenActionIs = [
 ];
 
 // When the action is one of x (check saveWhenActionIs array), save the state in loca storage
-export const storage = store => next => action => {
+const storage = store => next => action => {
   let result;
 
   try {
@@ -24,3 +24,5 @@ export const storage = store => next => action => {
     return result;
   }
 }
+
+export default storage;

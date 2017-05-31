@@ -1,5 +1,5 @@
-import { config } from 'config';
-import { utils } from 'utils';
+import config from 'config';
+import utils from 'utils';
 var num = require('big-integer');
 
 const api = {

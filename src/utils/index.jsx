@@ -1,2 +1,7 @@
-export { utils } from './utils.jsx';
-export { storage } from './storage.jsx';
+import utils from './utils';
+import storage from './storage';
+
+export default {
+  ...utils,
+  storage
+};

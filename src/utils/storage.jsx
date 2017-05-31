@@ -1,4 +1,4 @@
-export const storage = {
+const storage = {
   local: {
     save(key, value) {
       try {
@@ -25,3 +25,5 @@ export const storage = {
     }
   }
 };
+
+export default storage;

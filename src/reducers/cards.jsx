@@ -1,4 +1,4 @@
-import { utils } from 'utils';
+import utils from 'utils';
 
 const calculateNewMetrics = card => {
   // The state.card.metric object should be re-calculated from zero, again, each time

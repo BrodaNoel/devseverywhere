@@ -3,7 +3,7 @@ import angularjs from './icons/angularjs.png';
 import vuejs from './icons/vuejs.png';
 import emberjs from './icons/emberjs.png';
 
-export const config = {
+const config = {
   searchTweetsEvery: 1000 * 8, // 8 seconds
   cards: [
     {
@@ -58,3 +58,5 @@ export const config = {
     }
   }
 };
+
+export default config;

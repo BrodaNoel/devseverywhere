@@ -1,4 +1,4 @@
-export const utils = {
+const utils = {
   // Just truncate a numner
   truncate(number, digits = 0) {
     const multiplier = Math.pow(10, digits);
@@ -90,3 +90,5 @@ export const utils = {
     showMap: false
   }
 };
+
+export default utils;

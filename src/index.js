@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from 'reducers';
-import { storage } from 'middlewares';
-import * as utils from 'utils';
+import middlewares from 'middlewares';
+import utils from 'utils';
 
 import App from './App';
-import { config } from './config';
+import config from './config';
 import './index.css';
 
 let initialState = utils.storage.local.get('state');
@@ -25,7 +25,7 @@ if (initialState === null) {
         isDone: false,
         isSelected: false,
         nextMax: null,
-        metrics: utils.utils.defaultMetrics
+        metrics: utils.defaultMetrics
       },
     );
   });
@@ -36,7 +36,7 @@ if (initialState === null) {
 let store = createStore(
   reducers,
   initialState,
-  applyMiddleware(thunk, storage)
+  applyMiddleware(thunk, middlewares.storage)
 );
 
 ReactDOM.render(
