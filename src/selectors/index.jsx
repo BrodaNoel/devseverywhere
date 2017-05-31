@@ -1,10 +1,11 @@
-// All this file is deprecated, but not removed just to leave here kind of documentation
-// in case of need to implement selectors
+import selectedCard from './selectedCard';
+import selectedCardData from './selectedCardData';
+import selectedCardMetrics from './selectedCardMetrics';
 
-// import analytics from './analytics';
+const selectors = {
+  selectedCard,
+  selectedCardData,
+  selectedCardMetrics
+};
 
-// const selectors = {
-//   analytics
-// };
-
-// export default selectors;
+export default selectors;

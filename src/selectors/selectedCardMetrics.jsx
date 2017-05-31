@@ -1,0 +1,38 @@
+import { createSelectorCreator, defaultMemoize } from 'reselect'
+
+const getSelectedCard = state => state.cards.find(card => card.isSelected);
+
+const customSelectorCreator = createSelectorCreator(
+  defaultMemoize,
+  (prev, next) => {
+    if (!prev && !!next) {
+      return false;
+    }
+
+    if (!!prev && !next) {
+      return false;
+    }
+
+    if (!prev && !next) {
+      return true;
+    }
+
+    return (
+      prev.data.name === next.data.name &&
+      prev.tweets.length === next.tweets.length
+    );
+  }
+)
+
+export const selectedCardMetrics = customSelectorCreator(
+  getSelectedCard,
+  card => {
+    if (!card) {
+      return null;
+    }
+
+    return card.metrics;
+  }
+);
+
+export default selectedCardMetrics;

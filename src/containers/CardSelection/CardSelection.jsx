@@ -5,19 +5,19 @@ import './styles.css';
 
 import { Card } from 'components/Card';
 
-let CardSelection = (props) => (
+let CardSelection = props => (
   <div className="CardSelection">
     {
-      props.cards.map((card) => {
+      props.cards.map(card => {
         return (
           <Card
-            key={card.name}
+            key={card.data.name}
             onClick={() => {
-              props.history.push(`/${card.name}`);
+              props.history.push(`/${card.data.name}`);
             }}
-            name={card.name}
-            icon={card.icon}
-            styles={card.styles} />
+            name={card.data.name}
+            icon={card.data.icon}
+            styles={card.data.styles} />
         );
       })
     }

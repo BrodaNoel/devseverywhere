@@ -1,6 +1,4 @@
-const addError = (error) => ({
+export const addError = (error) => ({
   type: 'ADD_ERRORS',
   errors: [error]
 });
-
-export { addError };

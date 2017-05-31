@@ -8,7 +8,8 @@ This project was created to understand better:
   * Routing _(more info [here](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom)_
   * Jest
 * Redux
-  * Reselect _(more info [here](http://redux.js.org/docs/recipes/ComputingDerivedData.html) and [here](https://github.com/reactjs/reselect))_
+  * Reselect (including custom Memoize functions) _(more info [here](http://redux.js.org/docs/recipes/ComputingDerivedData.html) and [here](https://github.com/reactjs/reselect))_
+  * Thunk _(more info [here](https://github.com/gaearon/redux-thunk)_
 * Webpack
 * GoogleMapsAPI
 * TwitterAPI
