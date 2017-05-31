@@ -1,10 +1,9 @@
 import React from 'react';
 import './styles.css';
 
-export const ErrorMessage = (props) => (
+export const Error = (props) => (
   <div
-    className="ErrorMessage"
-    style={props.styles}
+    className="Error"
     onClick={e => e.target.remove()}>
     {props.error}
   </div>

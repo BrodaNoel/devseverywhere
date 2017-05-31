@@ -4,8 +4,7 @@ var num = require('big-integer');
 
 export const backend = {
   getTweets(card, credentials, token) {
-    let q = card.hashtags.join(' OR ');
-    let tweets = [];
+    let q = card.data.hashtags.join(' OR ');
     let params = {
       q,
       max: card.nextMax,
@@ -23,12 +22,10 @@ export const backend = {
       body: JSON.stringify(credentials)
     }).then(utils.fetchResponseHandler)
       .then(response => {
-        tweets = response.tweets.statuses;
-        card.nextMax = num(response.metadata.min).subtract(1);
-
         return {
-          tweets,
-          isDone: response.isDone
+          tweets: response.tweets.statuses,
+          isDone: response.isDone,
+          nextMax: num(response.metadata.min).subtract(1).toString()
         };
       });
   }

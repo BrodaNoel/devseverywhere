@@ -3,172 +3,93 @@
   * https://github.com/istarkov/google-map-react/blob/master/API.md
   */
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
-import { VictoryChart, VictoryLegend, VictoryTheme, VictoryLine } from 'victory';
-import cookies from 'js-cookie';
+import { connect } from 'react-redux';
+import { CardSelection } from 'containers/CardSelection';
+import { Metrics } from 'containers/Metrics';
 
-import { IconMap } from 'components/IconMap';
-import { CardSelection } from 'components/CardSelection';
-
-import { backend } from 'services';
-import { utils } from 'utils';
+import * as actions from 'actions';
+import selectors from 'selectors';
 import { config } from 'config';
 import './styles.css';
 
-export class AnalyticsPage extends Component {
-  static defaultProps = {
-    center: { lat: 10, lng: -35 },
-    zoom: 0
-  };
-
+class AnalyticsPage extends Component {
   intervalId = 0;
 
-  constructor(props) {
-    super(props);
-
-    this.changeSelectedCard(props.match.params.tech);
-
-    this.state = {
-      showMap: false,
-      analytics: {
-        hours: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        favorites: [0,0,0,0,0,0,0,0,0,0],
-        retweets: [0,0,0,0,0,0,0,0,0,0],
-        users: {
-          verified: 0,
-          verifiedRate: 0
-        },
-        tweetsWithGeoRate: 0,
-        tweetsWithGeo: [],
-        tweetsCount: 0,
-        map: {
-          points: []
-        }
-      }
-    };
+  getAnalyticsData(cardName) {
+    this.props.dispatch(
+      actions.getMoreTweets(
+        cardName,
+        this.props.user,
+        this.props.history,
+        this.props.match.params.tech
+      )
+    );
+    return;
   }
 
-  onCardClick = (card) => {
-    if (!window.isLoggedInTwitter) {
-      this.props.history.push(`/request-access/twitter/${card.name}`);
-    } else {
-      this.props.history.push(`/${card.name}`);
+  // This function will be called when we are absolutelly sure that we
+  // have to start looking for some new tweets.
+  // This is not the pain point. The pain point is how to be sure when call it.
+  // This function will clear the prev interval, look for tweets and set a
+  // interval to keep looking for tweets.
+  startGettingData(props) {
+    if (props.selectedCard !== null) {
+      clearInterval(this.intervalId);
+
+      this.getAnalyticsData(props.selectedCard);
+      this.intervalId = setInterval(() => this.getAnalyticsData(props.selectedCard), config.searchTweetsEvery);
     }
   }
 
-  calculateAnalytics() {
-    let data = {
-      hours: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      favorites: [0,0,0,0,0,0,0,0,0,0],
-      retweets: [0,0,0,0,0,0,0,0,0,0],
-      users: {
-        verified: 0,
-        verifiedRate: 0
-      },
-      tweetsWithGeo: [],
-      tweetsWithGeoRate: 0,
-      map: {
-        points: []
-      }
-    };
-
-    window.selectedCard.tweets.forEach((tweet) => {
-      let hour = new Date(tweet.created_at).getUTCHours();
-      data.hours[hour]++;
-
-      if (+tweet.favorite_count < 10) {
-        data.favorites[+tweet.favorite_count]++;
-      }
-
-      if (+tweet.retweet_count < 10) {
-        data.retweets[+tweet.retweet_count]++;
-      }
-
-      if (tweet.user.verified) {
-        data.users.verified++;
-      }
-
-      if (tweet.coordinates || tweet.place) {
-        data.tweetsWithGeo.push(tweet);
-        data.map.points.push(
-          utils.getMapPoint(tweet.place.bounding_box.coordinates[0])
-        );
-      }
-    });
-
-    // Calculate rates
-    data.users.verifiedRate = utils.truncate(data.users.verified / window.selectedCard.tweets.length * 100, 2);
-    data.tweetsWithGeoRate = utils.truncate(data.tweetsWithGeo.length / window.selectedCard.tweets.length * 100, 2);
-
-    data.tweetsCount = window.selectedCard.tweets.length;
-
-    this.setState({
-      analytics: data,
-      showMap: data.map.points.length > 0
-    });
-  }
-
-  getAnalyticsData(card) {
-    if (!card.isDone) {
-      backend.getTweets(
-        card,
-        {
-          key: window.credentials.accessToken,
-          secret: window.credentials.secret
-        },
-        cookies.get('firebaseToken')
-      ).then(data => {
-        // TODO: Remove it after Redux implementation
-        card.tweets = [...card.tweets, ...data.tweets];
-        card.isDone = data.isDone;
-
-        // If the card we just get data still selected, let's show its data
-        if (card.name === window.selectedCard.name) {
-          this.calculateAnalytics();
-        }
-      }).catch(response => {
-        if (response.error.code === 'auth/argument-error') {
-          this.props.onError('Sorry, you have to login again');
-          this.props.history.push(`/request-access/twitter/${card.name}`);
-
-        } else if (typeof response.error.message !== 'undefined') {
-          this.props.onError(`Unexpected error: ${response.error.message}`);
-
-        } else if (typeof response.error.body !== 'undefined') {
-          this.props.onError(`Backend error: ${response.error.body}`);
-
-        } else {
-          this.props.onError('WTF? Absolutely unknown error. But, in my computer is working 🤷');
-        }
-      });
-    }
-  }
-
-  changeSelectedCard(cardName) {
-    window.selectedCard = window.cards.find(x => x.name === cardName);
+  // This function is callen ONLY when... Read `shouldComponentUpdate` description.
+  // When this function is executed, means that we changed an important information
+  // about out card, so, we should re-render the page.
+  componentWillUpdate(newProps) {
+    this.startGettingData(newProps);
   }
 
   componentDidMount() {
-    if (!window.isLoggedInTwitter) {
-      this.props.history.push(`/request-access/twitter/${window.selectedCard.name}`);
+    if (!this.props.user.isLogged) {
+      this.props.history.push(`/request-access/${this.props.match.params.tech}`);
     } else {
-      this.getAnalyticsData(window.selectedCard);
-      this.calculateAnalytics();
-      this.intervalId = setInterval(() => {this.getAnalyticsData(window.selectedCard)}, config.searchTweetsEvery);
+      // If selectedCard is null, it's because we just arrived here. So, let's change the card.
+      // If `this.props.selectedCard !== this.props.match.params.tech` is true, means
+      // that we had the `xxx` card selected, but now, the URL say `yyy`. This scenario happens
+      // when you are seeing `.com/React`, then you close the page, and open the url `.com/Vue`
+      // IF NOT (the ELSE), it means you just refreshed the page. Because you have a selectedCard
+      // and the selectedCard is the same as the card we have in the URL.
+      if (this.props.selectedCard === null || this.props.selectedCard !== this.props.match.params.tech) {
+        this.props.dispatch(
+          actions.changeSelectedCard(this.props.match.params.tech)
+        );
+      } else {
+        this.startGettingData(this.props);
+      }
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    clearTimeout(this.intervalId);
-    this.changeSelectedCard(nextProps.match.params.tech);
+  // The component should me updated again when:
+  // 1. We didn't have a selectedCard AND NOW WE HAVE! (the user just came here), or,
+  // 2. We had a selectedCard, but now we have another one (someone changed the card)
+  shouldComponentUpdate(nextProps) {
+    return (
+      (this.props.selectedCard === null && nextProps.selectedCard !== null)
+      ||
+      (nextProps.selectedCard !== this.props.selectedCard)
+    );
+  }
 
-    this.getAnalyticsData(window.selectedCard);
-    this.calculateAnalytics();
-    this.intervalId = setInterval(() => {this.getAnalyticsData(window.selectedCard)}, config.searchTweetsEvery);
+  // This function will be called when the user CLICK on a card, in this page. Why?
+  // because the component was mounted, and it's just changing the props.
+  // So, let's change the card!
+  componentWillReceiveProps(nextProps) {
+    this.props.dispatch(
+      actions.changeSelectedCard(nextProps.match.params.tech)
+    );
   }
 
   componentWillUnmount() {
-    clearTimeout(this.intervalId);
+    clearInterval(this.intervalId);
   }
 
   render() {
@@ -180,74 +101,24 @@ export class AnalyticsPage extends Component {
           target="_blank"
           rel="noopener noreferrer">Fork me</a>
 
-        <div className="cardSelectionContainer">
-          <CardSelection
-            cards={window.cards}
-            onCardClick={this.onCardClick} />
+        <div className="cardSelectionWrapper">
+          <CardSelection />
         </div>
 
-        <div className={ 'analyticsContainer ' + (!this.state.showMap ? 'full' : '') }>
-          <div className="row -numbers">
-            <div className="cell">
-              { this.state.analytics.users.verified } user verified ({ this.state.analytics.users.verifiedRate }%)
-            </div>
-
-            <div className="cell" title="We are processing all tweets from last week">
-              { this.state.analytics.tweetsCount } tweets were analized<br/>
-              { window.selectedCard.isDone ? 'Process finished.' : 'Getting more tweets...' }
-            </div>
-
-            <div className="cell">
-              { this.state.analytics.tweetsWithGeo.length } tweets with geolocation ({ this.state.analytics.tweetsWithGeoRate }%)
-            </div>
-          </div>
-
-          <div className="row -graphs">
-            <div className="cell">
-              <VictoryChart theme={VictoryTheme.material}>
-                <VictoryLine
-                  data={utils.formatDataToGraph(this.state.analytics.retweets, 'x', 'y')}
-                  theme={VictoryTheme.material}/>
-
-                <VictoryLine
-                  data={utils.formatDataToGraph(this.state.analytics.favorites, 'x', 'y')}
-                  theme={VictoryTheme.material}/>
-
-                <VictoryLegend
-                  data={[{ name: 'Retweets' }, { name: 'Favorites' }]}/>
-              </VictoryChart>
-            </div>
-
-            <div className="cell">
-              <VictoryChart theme={VictoryTheme.material}>
-                <VictoryLine
-                  domain={{
-                    x: [0, 24],
-                    y: [0, Math.max(...this.state.analytics.hours) * 1.1]
-                  }}
-                  data={utils.formatDataToGraph(this.state.analytics.hours, 'x', 'y')}
-                  theme={VictoryTheme.material}/>
-
-                <VictoryLegend
-                  data={[{ name: 'UTC hours' }]}/>
-              </VictoryChart>
-            </div>
-          </div>
+        <div className="metricsWrapper">
+          { this.props.selectedCard !== null && <Metrics /> }
         </div>
-
-        {
-          this.state.showMap &&
-          <div className="mapContainer">
-            <GoogleMapReact
-              defaultCenter={this.props.center}
-              defaultZoom={this.props.zoom}
-              bootstrapURLKeys={{key: config.googleMaps.apiKey}}>
-
-              {this.state.analytics.map.points.map((point, index) => <IconMap key={index} {...point} />)}
-            </GoogleMapReact>
-          </div>
-        }
       </div>
     );
   }
 };
+
+AnalyticsPage = connect(
+  (state) => ({
+    user: state.user,
+    selectedCard: selectors.selectedCard(state)
+  }),
+  null
+)(AnalyticsPage);
+
+export { AnalyticsPage };

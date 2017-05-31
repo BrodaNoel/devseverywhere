@@ -1,0 +1,41 @@
+.Metrics {
+  width: 100%;
+  height: 100%;
+
+  .analyticsContainer {
+    width: 100%;
+    height: 50%;
+
+    &.full {
+      height: 100%;
+    }
+
+    .row {
+      width: 100%;
+      height: 50%;
+      display: flex;
+
+      .cell {
+        display: flex;
+        flex-grow: 1;
+        flex-basis: 0;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      &.-numbers {
+        height: 25%;
+      }
+
+      &.-graphs {
+        height: 75%;
+      }
+    }
+  }
+
+  .mapContainer {
+    width: 100%;
+    height: 50%;
+  }
+}
