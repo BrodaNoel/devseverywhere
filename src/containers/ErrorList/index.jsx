@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Error from 'components/Error';
 
 let ErrorList = props => (
-  <div>
+  <div className="ErrorList">
     {
       props.errors.map((error, index) => {
         return (

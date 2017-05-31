@@ -11,7 +11,7 @@ import './styles.css';
 
 let Metrics = props => (
   <div className="Metrics">
-    <div className={ 'analyticsContainer ' + (!props.metrics.showMap ? 'full' : '') }>
+    <div className={ 'metricsContainer ' + (!props.metrics.showMap ? 'full' : '') }>
       <div className="row -numbers">
         <div className="cell">
           { props.metrics.users.verified } user verified ({ props.metrics.users.verifiedRate }%)
@@ -65,7 +65,7 @@ let Metrics = props => (
 
     {
       props.metrics.showMap &&
-      <div className="mapContainer">
+      <div className="mapWrapper">
         <GoogleMapReact
           defaultCenter={props.center}
           defaultZoom={props.zoom}
