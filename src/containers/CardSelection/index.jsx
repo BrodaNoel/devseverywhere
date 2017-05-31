@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import './styles.css';
 
 import Card from 'components/Card';
+import config from 'config';
 
 let CardSelection = props => (
   <div className="CardSelection">
@@ -11,26 +11,23 @@ let CardSelection = props => (
       props.cards.map(card => {
         return (
           <Card
-            key={card.data.name}
+            key={card.name}
             onClick={() => {
-              props.history.push(`/${card.data.name}`);
+              props.history.push(`/${card.name}`);
             }}
-            name={card.data.name}
-            icon={card.data.icon}
-            styles={card.data.styles} />
+            name={card.name}
+            icon={card.icon}
+            styles={card.styles} />
         );
       })
     }
   </div>
 );
 
-CardSelection = withRouter(CardSelection);
+CardSelection.defaultProps = {
+  cards: config.cards
+}
 
-CardSelection = connect(
-  (state) => ({
-    cards: state.cards
-  }),
-  null
-)(CardSelection);
+CardSelection = withRouter(CardSelection);
 
 export default CardSelection;
