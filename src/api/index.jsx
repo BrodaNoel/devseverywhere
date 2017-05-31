@@ -2,7 +2,7 @@ import { config } from 'config';
 import { utils } from 'utils';
 var num = require('big-integer');
 
-export const backend = {
+const api = {
   getTweets(card, credentials, token) {
     let q = card.data.hashtags.join(' OR ');
     let params = {
@@ -30,3 +30,5 @@ export const backend = {
       });
   }
 };
+
+export default api;

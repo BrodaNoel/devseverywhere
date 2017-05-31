@@ -1,4 +1,4 @@
-import { backend } from 'services';
+import api from 'api';
 import * as errorActions from './errors';
 
 export const addCards = cards => ({
@@ -43,7 +43,7 @@ export const getMoreTweets = (cardName, user, history, tech) => (dispatch, getSt
   const card = getState().cards.find(card => card.data.name === cardName);
 
   if (!card.isDone) {
-    backend.getTweets(
+    api.getTweets(
       card,
       {
         key: user.credentials.accessToken,
