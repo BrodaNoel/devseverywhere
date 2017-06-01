@@ -1,9 +1,9 @@
-import selectedCard from './selectedCard';
+import selectedCardName from './selectedCardName';
 import selectedCardData from './selectedCardData';
 import selectedCardMetrics from './selectedCardMetrics';
 
 const selectors = {
-  selectedCard,
+  selectedCardName,
   selectedCardData,
   selectedCardMetrics
 };

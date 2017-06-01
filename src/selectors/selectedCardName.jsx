@@ -23,7 +23,7 @@ const customSelectorCreator = createSelectorCreator(
   }
 )
 
-export const selectedCard = customSelectorCreator(
+export const selectedCardName = customSelectorCreator(
   getSelectedCard,
   card => {
     if (!card) {
@@ -34,4 +34,4 @@ export const selectedCard = customSelectorCreator(
   }
 );
 
-export default selectedCard;
+export default selectedCardName;

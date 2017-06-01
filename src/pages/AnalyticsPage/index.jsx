@@ -33,11 +33,11 @@ class AnalyticsPage extends Component {
   // This function will clear the prev interval, look for tweets and set a
   // interval to keep looking for tweets.
   startGettingData(props) {
-    if (props.selectedCard !== null) {
+    if (props.selectedCardName !== null) {
       clearInterval(this.intervalId);
 
-      this.getAnalyticsData(props.selectedCard);
-      this.intervalId = setInterval(() => this.getAnalyticsData(props.selectedCard), config.searchTweetsEvery);
+      this.getAnalyticsData(props.selectedCardName);
+      this.intervalId = setInterval(() => this.getAnalyticsData(props.selectedCardName), config.searchTweetsEvery);
     }
   }
 
@@ -52,13 +52,13 @@ class AnalyticsPage extends Component {
     if (!this.props.user.isLogged) {
       this.props.history.push(`/request-access/${this.props.match.params.tech}`);
     } else {
-      // If selectedCard is null, it's because we just arrived here. So, let's change the card.
-      // If `this.props.selectedCard !== this.props.match.params.tech` is true, means
+      // If selectedCardName is null, it's because we just arrived here. So, let's change the card.
+      // If `this.props.selectedCardName !== this.props.match.params.tech` is true, means
       // that we had the `xxx` card selected, but now, the URL say `yyy`. This scenario happens
       // when you are seeing `.com/React`, then you close the page, and open the url `.com/Vue`
-      // IF NOT (the ELSE), it means you just refreshed the page. Because you have a selectedCard
-      // and the selectedCard is the same as the card we have in the URL.
-      if (this.props.selectedCard === null || this.props.selectedCard !== this.props.match.params.tech) {
+      // IF NOT (the ELSE), it means you just refreshed the page. Because you have a selectedCardName
+      // and the selectedCardName is the same as the card we have in the URL.
+      if (this.props.selectedCardName === null || this.props.selectedCardName !== this.props.match.params.tech) {
         this.props.dispatch(
           actions.changeSelectedCard(this.props.match.params.tech)
         );
@@ -69,13 +69,13 @@ class AnalyticsPage extends Component {
   }
 
   // The component should me updated again when:
-  // 1. We didn't have a selectedCard AND NOW WE HAVE! (the user just came here), or,
-  // 2. We had a selectedCard, but now we have another one (someone changed the card)
+  // 1. We didn't have a selectedCardName AND NOW WE HAVE! (the user just came here), or,
+  // 2. We had a selectedCardName, but now we have another one (someone changed the card)
   shouldComponentUpdate(nextProps) {
     return (
-      (this.props.selectedCard === null && nextProps.selectedCard !== null)
+      (this.props.selectedCardName === null && nextProps.selectedCardName !== null)
       ||
-      (nextProps.selectedCard !== this.props.selectedCard)
+      (nextProps.selectedCardName !== this.props.selectedCard)
     );
   }
 
@@ -106,7 +106,7 @@ class AnalyticsPage extends Component {
         </div>
 
         <div className="metricsWrapper">
-          { this.props.selectedCard !== null && <Metrics /> }
+          { this.props.selectedCardName !== null && <Metrics /> }
         </div>
       </div>
     );
@@ -116,7 +116,7 @@ class AnalyticsPage extends Component {
 AnalyticsPage = connect(
   (state) => ({
     user: state.user,
-    selectedCard: selectors.selectedCard(state)
+    selectedCardName: selectors.selectedCardName(state)
   }),
   null
 )(AnalyticsPage);
