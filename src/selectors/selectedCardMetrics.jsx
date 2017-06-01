@@ -19,7 +19,7 @@ const customSelectorCreator = createSelectorCreator(
 
     return (
       prev.data.name === next.data.name &&
-      prev.tweets.length === next.tweets.length
+      prev.metrics.tweetsCount === next.metrics.tweetsCount
     );
   }
 )
