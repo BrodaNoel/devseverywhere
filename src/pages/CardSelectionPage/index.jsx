@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import DocumentTitle from 'react-document-title';
 
 import CardSelection from 'containers/CardSelection';
+import config from 'config';
 import './styles.css';
 
 class CardSelectionPage extends Component {
   render() {
     return (
-      <div className="CardSelectionPage">
-        <CardSelection />
-      </div>
+      <DocumentTitle title={config.pageTitle}>
+        <div className="CardSelectionPage">
+          <CardSelection />
+        </div>
+      </DocumentTitle>
     );
   }
 };

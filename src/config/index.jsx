@@ -5,6 +5,9 @@ import emberjs from './icons/emberjs.png';
 
 const config = {
   searchTweetsEvery: 1000 * 8, // 8 seconds
+
+  pageTitle: 'Devs, Devs Everywhere!',
+
   cards: [
     {
       name: 'ReactJS',

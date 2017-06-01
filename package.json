@@ -13,6 +13,7 @@
     "google-map-react": "^0.24.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
+    "react-document-title": "^2.0.3",
     "react-dom": "^15.5.4",
     "react-ga": "^2.2.0",
     "react-redux": "^5.0.5",

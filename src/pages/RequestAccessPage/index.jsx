@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import DocumentTitle from 'react-document-title';
 import * as firebase from 'firebase';
 import './styles.css';
 
@@ -53,19 +54,21 @@ class RequestAccessPage extends Component {
 
   render() {
     return (
-      <div className="RequestAccessPage">
-        <div className="disclaimer">
-          Hey! Give us access to your Twitter account!<br/>
-          Our account is too busy.<br/>
-          Don't worry, we are just gonna steal all your tweets while you sleep.<br/>
+      <DocumentTitle title={`Request Twitter access | ${config.pageTitle}`}>
+        <div className="RequestAccessPage">
+          <div className="disclaimer">
+            Hey! Give us access to your Twitter account!<br/>
+            Our account is too busy.<br/>
+            Don't worry, we are just gonna steal all your tweets while you sleep.<br/>
 
-          <div className="joke">Nah... Just kidding</div>
+            <div className="joke">Nah... Just kidding</div>
 
-          <div className="button" onClick={this.requestTwitterAccess}>
-            {this.state.buttonLabel}
+            <div className="button" onClick={this.requestTwitterAccess}>
+              {this.state.buttonLabel}
+            </div>
           </div>
         </div>
-      </div>
+      </DocumentTitle>
     );
   }
 };

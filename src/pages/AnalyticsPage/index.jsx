@@ -4,6 +4,7 @@
   */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import DocumentTitle from 'react-document-title';
 import CardSelection from 'containers/CardSelection';
 import Metrics from 'containers/Metrics';
 
@@ -94,21 +95,23 @@ class AnalyticsPage extends Component {
 
   render() {
     return (
-      <div className="AnalyticsPage">
-        <a
-          className="gitHubIcon"
-          href="https://github.com/BrodaNoel/devseverywhere"
-          target="_blank"
-          rel="noopener noreferrer">Fork me</a>
+      <DocumentTitle title={`${this.props.selectedCardName} | ${config.pageTitle}`}>
+        <div className="AnalyticsPage">
+          <a
+            className="gitHubIcon"
+            href="https://github.com/BrodaNoel/devseverywhere"
+            target="_blank"
+            rel="noopener noreferrer">Fork me</a>
 
-        <div className="cardSelectionWrapper">
-          <CardSelection />
-        </div>
+          <div className="cardSelectionWrapper">
+            <CardSelection />
+          </div>
 
-        <div className="metricsWrapper">
-          { this.props.selectedCardName !== null && <Metrics /> }
+          <div className="metricsWrapper">
+            { this.props.selectedCardName !== null && <Metrics /> }
+          </div>
         </div>
-      </div>
+      </DocumentTitle>
     );
   }
 };
