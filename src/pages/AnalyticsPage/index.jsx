@@ -25,7 +25,6 @@ class AnalyticsPage extends Component {
         this.props.match.params.tech
       )
     );
-    return;
   }
 
   // This function will be called when we are absolutelly sure that we
