@@ -73,6 +73,10 @@ const utils = {
     });
   },
 
+  clone(json) {
+    return JSON.parse(JSON.stringify(json));
+  },
+
   defaultMetrics: {
     hours: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     favorites: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

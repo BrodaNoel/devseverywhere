@@ -17,17 +17,14 @@ let initialState = utils.storage.local.get('state');
 // and adding data that will be used by the app.
 if (initialState === null) {
   let cards = config.cards.map((card) => {
-    return Object.assign(
-      {},
-      {
-        data: card,
-        tweets: [],
-        isDone: false,
-        isSelected: false,
-        nextMax: null,
-        metrics: utils.defaultMetrics
-      },
-    );
+    return utils.clone({
+      data: card,
+      tweets: [],
+      isDone: false,
+      isSelected: false,
+      nextMax: null,
+      metrics: utils.defaultMetrics
+    });
   });
 
   initialState = { cards };

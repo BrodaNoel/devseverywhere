@@ -3,7 +3,7 @@ import utils from 'utils';
 const calculateNewMetrics = card => {
   // The state.card.metric object should be re-calculated from zero, again, each time
   // we receive new data, due to the Rates values
-  let data = Object.assign({}, utils.defaultMetrics);
+  let data = utils.clone(utils.defaultMetrics);
 
   card.tweets.forEach(tweet => {
     let hour = new Date(tweet.created_at).getUTCHours();
