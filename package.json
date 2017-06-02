@@ -8,6 +8,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.16.1",
     "big-integer": "^1.6.22",
     "firebase": "^4.0.0",
     "google-map-react": "^0.24.0",

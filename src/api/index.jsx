@@ -1,31 +1,29 @@
+import axios from 'axios';
 import config from 'config';
-import utils from 'utils';
 var num = require('big-integer');
 
 const api = {
   getTweets(card, credentials, token) {
-    let q = card.data.hashtags.join(' OR ');
-    let params = {
-      q,
-      max: card.nextMax,
-      count: 100
-    };
-    let headers = {
-      Authorization: 'Bearer ' + token
-    };
-    let url = config.backend.endpoints.getTweets.url;
-    url += `?q=${encodeURIComponent(q)}&max=${params.max}&count=${params.count}`;
-
-    return fetch(url, {
-      headers,
+    const axiosConfig = {
+      url: config.backend.endpoints.getTweets.url,
+      params: {
+        q: card.data.hashtags.join(' OR '),
+        max: String(card.nextMax),
+        count: 100
+      },
       method: config.backend.endpoints.getTweets.method,
-      body: JSON.stringify(credentials)
-    }).then(utils.fetchResponseHandler)
+      headers: {
+        Authorization: 'Bearer ' + token
+      },
+      data: credentials
+    };
+
+    return axios(axiosConfig)
       .then(response => {
         return {
-          tweets: response.tweets.statuses,
-          isDone: response.isDone,
-          nextMax: num(response.metadata.min).subtract(1).toString()
+          tweets: response.data.tweets.statuses,
+          isDone: response.data.isDone,
+          nextMax: num(response.data.metadata.min).subtract(1).toString()
         };
       });
   }

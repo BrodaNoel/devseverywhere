@@ -56,23 +56,6 @@ const utils = {
     return data.map((value, index) => ({[x]: index, [y]: value}));
   },
 
-  fetchResponseHandler(response) {
-    return response.text().then(text => {
-      try {
-        let data = JSON.parse(text);
-
-        if (response.status === 200) {
-          return data;
-        } else {
-          return Promise.reject(data);
-        }
-
-      } catch (e) {
-        return Promise.reject({ error: { body: text } });
-      }
-    });
-  },
-
   clone(json) {
     return JSON.parse(JSON.stringify(json));
   },
