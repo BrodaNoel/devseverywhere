@@ -4,7 +4,7 @@ import config from 'config';
 
 GoogleAnalytics.initialize(config.googleAnalytics.id);
 
-const withGA = (WrappedComponent, componentProps) => {
+const withGA = (WrappedComponent) => {
   const trackPage = page => {
     GoogleAnalytics.set({ page });
     GoogleAnalytics.pageview(page);
@@ -14,7 +14,7 @@ const withGA = (WrappedComponent, componentProps) => {
     trackPage(props.location.pathname);
 
     return (
-      <WrappedComponent {...props} {...componentProps} />
+      <WrappedComponent {...props} />
     );
   };
 
