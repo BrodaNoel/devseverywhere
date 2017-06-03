@@ -72,11 +72,10 @@ class AnalyticsPage extends Component {
   // 1. We didn't have a selectedCardName AND NOW WE HAVE! (the user just came here), or,
   // 2. We had a selectedCardName, but now we have another one (someone changed the card)
   shouldComponentUpdate(nextProps) {
-    return (
-      (this.props.selectedCardName === null && nextProps.selectedCardName !== null)
-      ||
-      (nextProps.selectedCardName !== this.props.selectedCard)
-    );
+    const fromNullToSomething = this.props.selectedCardName === null && nextProps.selectedCardName !== null;
+    const changingCard = nextProps.selectedCardName !== this.props.selectedCardName;
+
+    return fromNullToSomething || changingCard;
   }
 
   // This function will be called when the user CLICK on a card, in this page. Why?
