@@ -1,4 +1,5 @@
 import api from 'api';
+import notification from 'antd/lib/notification';
 
 export const addCards = cards => ({
   type: 'ADD_CARDS',
@@ -82,6 +83,10 @@ export const getMoreTweets = (cardName, user, history, tech) => (dispatch, getSt
         error = 'WTF? Absolutely unknown error. But, in my computer is working 🤷';
       }
 
+      notification.error({
+        message: 'Error while looking for more tweets',
+        description: error
+      });
     });
   }
 };

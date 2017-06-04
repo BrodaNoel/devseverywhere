@@ -8,6 +8,7 @@ import DocumentTitle from 'react-document-title';
 import * as firebase from 'firebase';
 import './styles.css';
 
+import notification from 'antd/lib/notification';
 import * as actions from 'actions';
 import config from 'config';
 
@@ -44,6 +45,10 @@ class RequestAccessPage extends Component {
       });
 
     }).catch(error => {
+      notification.error({
+        message: 'Login Error',
+        description: `${error.code}: ${error.message}`
+      });
 
       this.props.history.push(`/`);
     });
