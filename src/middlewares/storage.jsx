@@ -16,6 +16,12 @@ const storage = store => next => action => {
 
     if (saveWhenActionIs.indexOf(action.type) !== -1) {
       utils.storage.local.save('state', store.getState());
+
+      const storeGeneratedAt = utils.storage.local.get('storeGeneratedAt');
+      if (storeGeneratedAt === null) {
+        const now = new Date();
+        utils.storage.local.save('storeGeneratedAt', now.getTime());
+      }
     }
   } catch (e) {
     // :shrug

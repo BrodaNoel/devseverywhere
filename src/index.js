@@ -15,12 +15,16 @@ import App from './App';
 import config from './config';
 import './index.css';
 
-let initialState = utils.storage.local.get('state');
+const storeGeneratedAt = utils.storage.local.get('storeGeneratedAt');
+const now = new Date().getTime();
+const oneDay = 1000 * 60 * 60 * 24;
 
-// Init card array, getting it from the init-config-file
-// and adding data that will be used by the app.
-if (initialState === null) {
-  let cards = config.cards.map((card) => {
+// If State was generated more than 24 hours ago, then, restart the state.
+let initialState = null;
+if (storeGeneratedAt === null || (now - storeGeneratedAt) > oneDay) {
+  // Init card array, getting it from the init-config-file
+  // and adding data that will be used by the app.
+  const cards = config.cards.map(card => {
     return utils.clone({
       data: card,
       tweets: [],
@@ -32,9 +36,11 @@ if (initialState === null) {
   });
 
   initialState = { cards };
+} else {
+  initialState = utils.storage.local.get('state');
 }
 
-let store = createStore(
+const store = createStore(
   reducers,
   initialState,
   applyMiddleware(thunk, middlewares.storage)
