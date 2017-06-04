@@ -14,9 +14,17 @@ const api = {
       method: config.backend.endpoints.getTweets.method,
       headers: {
         Authorization: 'Bearer ' + token
-      },
-      data: credentials
+      }
     };
+
+    if (axiosConfig.method === 'GET') {
+      axiosConfig.params = {
+        ...axiosConfig.params,
+        credentials
+      };
+    } else {
+      axiosConfig.data = credentials;
+    }
 
     return axios(axiosConfig)
       .then(response => {
