@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import CardSelection from 'containers/CardSelection';
 import Metrics from 'containers/Metrics';
+import notification from 'antd/lib/notification';
 
 import * as actions from 'actions';
 import selectors from 'selectors';
@@ -46,6 +47,11 @@ class AnalyticsPage extends Component {
   // about out card, so, we should re-render the page.
   componentWillUpdate(newProps) {
     this.startGettingData(newProps);
+
+    notification.success({
+      message: 'Card changed',
+      description: 'Now, the information that is shown is about ' + newProps.selectedCardName
+    });
   }
 
   componentDidMount() {

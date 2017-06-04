@@ -7,6 +7,9 @@ import reducers from 'reducers';
 import middlewares from 'middlewares';
 import utils from 'utils';
 
+// Import ant styles
+import 'antd/lib/notification/style/css';
+
 import App from './App';
 import config from './config';
 import './index.css';
