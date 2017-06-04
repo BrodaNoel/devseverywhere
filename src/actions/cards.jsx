@@ -1,5 +1,4 @@
 import api from 'api';
-import * as errorActions from './errors';
 
 export const addCards = cards => ({
   type: 'ADD_CARDS',
@@ -83,9 +82,6 @@ export const getMoreTweets = (cardName, user, history, tech) => (dispatch, getSt
         error = 'WTF? Absolutely unknown error. But, in my computer is working 🤷';
       }
 
-      dispatch(
-        errorActions.addError(error)
-      );
     });
   }
 };

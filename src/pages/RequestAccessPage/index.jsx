@@ -44,9 +44,6 @@ class RequestAccessPage extends Component {
       });
 
     }).catch(error => {
-      this.props.dispatch(
-        actions.addError(`Looks like we had an issue while loging. Error ${error.code}: ${error.message}`)
-      );
 
       this.props.history.push(`/`);
     });
