@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import './styles.css';
 
 import notification from 'antd/lib/notification';
+import Button from 'antd/lib/button';
 import * as actions from 'actions';
 import config from 'config';
 
@@ -65,9 +66,11 @@ class RequestAccessPage extends Component {
 
             <div className="joke">Nah... Just kidding</div>
 
-            <div className="button" onClick={this.requestTwitterAccess}>
+            <Button
+              onClick={this.requestTwitterAccess}
+              size="large">
               {this.state.buttonLabel}
-            </div>
+            </Button>
           </div>
         </div>
       </DocumentTitle>
