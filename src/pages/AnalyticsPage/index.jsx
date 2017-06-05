@@ -9,7 +9,7 @@ import CardSelection from 'containers/CardSelection';
 import Metrics from 'containers/Metrics';
 import notification from 'antd/lib/notification';
 
-import * as actions from 'actions';
+import { getMoreTweets, changeSelectedCard } from 'actions';
 import selectors from 'selectors';
 import config from 'config';
 import './styles.css';
@@ -18,13 +18,11 @@ class AnalyticsPage extends Component {
   intervalId = 0;
 
   getAnalyticsData(cardName) {
-    this.props.dispatch(
-      actions.getMoreTweets(
-        cardName,
-        this.props.user,
-        this.props.history,
-        this.props.match.params.tech
-      )
+    this.props.getMoreTweets(
+      cardName,
+      this.props.user,
+      this.props.history,
+      this.props.match.params.tech
     );
   }
 
@@ -65,9 +63,7 @@ class AnalyticsPage extends Component {
       // IF NOT (the ELSE), it means you just refreshed the page. Because you have a selectedCardName
       // and the selectedCardName is the same as the card we have in the URL.
       if (this.props.selectedCardName === null || this.props.selectedCardName !== this.props.match.params.tech) {
-        this.props.dispatch(
-          actions.changeSelectedCard(this.props.match.params.tech)
-        );
+        this.props.changeSelectedCard(this.props.match.params.tech);
       } else {
         this.startGettingData(this.props);
       }
@@ -88,9 +84,7 @@ class AnalyticsPage extends Component {
   // because the component was mounted, and it's just changing the props.
   // So, let's change the card!
   componentWillReceiveProps(nextProps) {
-    this.props.dispatch(
-      actions.changeSelectedCard(nextProps.match.params.tech)
-    );
+    this.props.changeSelectedCard(nextProps.match.params.tech);
   }
 
   componentWillUnmount() {
@@ -125,7 +119,7 @@ AnalyticsPage = connect(
     user: state.user,
     selectedCardName: selectors.selectedCardName(state)
   }),
-  null
+  { getMoreTweets, changeSelectedCard }
 )(AnalyticsPage);
 
 export default AnalyticsPage;

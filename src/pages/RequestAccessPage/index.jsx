@@ -10,7 +10,7 @@ import './styles.css';
 
 import notification from 'antd/lib/notification';
 import Button from 'antd/lib/button';
-import * as actions from 'actions';
+import { logInUser } from 'actions';
 import config from 'config';
 
 class RequestAccessPage extends Component {
@@ -37,9 +37,7 @@ class RequestAccessPage extends Component {
             firebaseToken: token
           };
 
-          this.props.dispatch(
-            actions.logInUser(user)
-          );
+          this.props.logInUser(user);
 
           this.props.history.push(`/${this.tech}`);
         }, 1000);
@@ -78,6 +76,6 @@ class RequestAccessPage extends Component {
   }
 };
 
-RequestAccessPage = connect()(RequestAccessPage);
+RequestAccessPage = connect(null, {logInUser})(RequestAccessPage);
 
 export default RequestAccessPage;
