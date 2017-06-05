@@ -58,8 +58,8 @@ class RequestAccessPage extends Component {
       <DocumentTitle title={`Request Twitter access | ${config.pageTitle}`}>
         <div className="RequestAccessPage">
           <div className="disclaimer">
-            Hey! Our account is too busy 💅<br/>
-            Can we use your Twitter account to look for Tweets? 🙏 😇<br/><br/>
+            Hey! Our account is too busy <span role="img" aria-label="Nails polish">💅</span><br/>
+          Can we use your Twitter account to look for Tweets? <span role="img" aria-label="Praying hands">🙏</span> <span role="img" aria-label="Smiley face">😇</span><br/><br/>
 
             <Button
               onClick={this.requestTwitterAccess}
