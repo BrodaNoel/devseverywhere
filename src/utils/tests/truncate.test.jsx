@@ -1,4 +1,4 @@
-import utils from '../utils';
+import utils from '../../utils';
 
 it('truncate positive numbers with 1 decimal', () => {
   expect(utils.truncate(1.1, 1)).toEqual(1.1);

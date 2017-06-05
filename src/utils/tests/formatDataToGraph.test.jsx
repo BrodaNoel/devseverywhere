@@ -1,4 +1,4 @@
-import utils from '../utils';
+import utils from '../../utils';
 
 it('usual data', () => {
   const data = [10, 30, 50];
