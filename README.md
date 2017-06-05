@@ -1,6 +1,7 @@
 # DevsEverywhere
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f32cb1327d9449e9bdf0e91d67c7823c)](https://www.codacy.com/app/brodanoel/devseverywhere?utm_source=github.com&utm_medium=referral&utm_content=BrodaNoel/devseverywhere&utm_campaign=badger)
+<img src="https://travis-ci.org/BrodaNoel/devseverywhere.svg?branch=master">
 
 This is just... something for fun. You can test it in [devseverywhere.com](https://devseverywhere.com).
 
