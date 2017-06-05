@@ -10,6 +10,7 @@ import utils from 'utils';
 // Import ant styles
 import 'antd/lib/notification/style/css';
 import 'antd/lib/button/style/css';
+import 'antd/lib/tooltip/style/css';
 
 import App from './App';
 import config from './config';

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import IconMap from 'components/IconMap';
 import { VictoryChart, VictoryLegend, VictoryTheme, VictoryLine } from 'victory';
+import Tooltip from 'antd/lib/tooltip';
 
 import utils from 'utils';
 import selectors from 'selectors';
@@ -14,12 +15,13 @@ let Metrics = props => (
     <div className={ 'metricsContainer ' + (!props.metrics.showMap ? 'full' : '') }>
       <div className="row -numbers">
         <div className="cell">
-          { props.metrics.users.verified } user verified ({ props.metrics.users.verifiedRate }%)
+          { props.metrics.users.verified } users verified ({ props.metrics.users.verifiedRate }%)
         </div>
 
-        <div className="cell" title="We are processing all tweets from last week">
-          { props.metrics.tweetsCount } tweets were analized<br/>
-          { props.selectedCardData.isDone ? 'Process finished.' : 'Getting more tweets...' }
+        <div className="cell -important">
+          <Tooltip title="Processing all tweets from last week">
+            { props.metrics.tweetsCount } tweets were analized
+          </Tooltip>
         </div>
 
         <div className="cell">
