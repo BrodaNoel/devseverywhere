@@ -11,6 +11,7 @@ import utils from 'utils';
 import 'antd/lib/notification/style/css';
 import 'antd/lib/button/style/css';
 import 'antd/lib/tooltip/style/css';
+import 'antd/lib/progress/style/css';
 
 import App from './App';
 import config from './config';

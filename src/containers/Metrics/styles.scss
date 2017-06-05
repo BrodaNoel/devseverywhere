@@ -22,9 +22,14 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        flex-direction: column;
 
         &.-important {
           font-size: 1.2em;
+        }
+
+        .progress {
+          width: 200px;
         }
       }
 
