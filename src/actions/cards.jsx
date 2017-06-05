@@ -67,21 +67,20 @@ export const getMoreTweets = (cardName, user, history, tech) => (dispatch, getSt
       }
 
     }).catch(response => {
+      const data = response.response.data;
       let error = 'WTF? Absolutely unknown error. But, in my computer is working 🤷';
 
-      if (response.error) {
-        if (response.error.code === 'auth/argument-error') {
+      if (data && data.error) {
+        if (data.error.code === 'auth/argument-error') {
           error = 'Sorry, you have to login again';
           history.push(`/request-access/${tech}`);
 
-        } else if (typeof response.error.message !== 'undefined') {
-          error = `Unexpected error: ${response.error.message}`;
+        } else if (typeof data.error.message !== 'undefined') {
+          error = `Unexpected error: ${data.error.message}`;
 
-        } else if (typeof response.error.body !== 'undefined') {
-          error = `Backend error: ${response.error.body}`;
+        } else if (typeof data.error.body !== 'undefined') {
+          error = `Backend error: ${data.error.body}`;
         }
-      } else if (response.response && response.response.data) {
-        console.log('Error while looking for tweets. Response object:', response.response);
       }
 
       notification.error({
