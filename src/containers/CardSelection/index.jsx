@@ -5,15 +5,15 @@ import './styles.css';
 import Card from 'components/Card';
 import config from 'config';
 
-let CardSelection = props => (
+let CardSelection = ({ cards, history }) => (
   <div className="CardSelection">
     {
-      props.cards.map(card => {
+      cards.map(card => {
         return (
           <Card
             key={card.name}
             onClick={() => {
-              props.history.push(`/${card.name}`);
+              history.push(`/${card.name}`);
             }}
             name={card.name}
             icon={card.icon}
