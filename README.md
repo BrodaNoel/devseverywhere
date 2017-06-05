@@ -14,6 +14,7 @@ This project was created to understand better:
   * Thunk _(more info [here](https://github.com/gaearon/redux-thunk))_
 * Axios
 * Webpack
+* Travis-CI
 * GoogleMapsAPI
 * TwitterAPI
 * Firebase Functions
