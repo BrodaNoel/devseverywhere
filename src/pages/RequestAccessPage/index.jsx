@@ -16,7 +16,7 @@ import config from 'config';
 class RequestAccessPage extends Component {
   tech = this.props.match.params.tech;
   state = {
-    buttonLabel: 'Ok!'
+    buttonLabel: 'OK'
   };
 
   requestTwitterAccess = () => {
@@ -58,11 +58,8 @@ class RequestAccessPage extends Component {
       <DocumentTitle title={`Request Twitter access | ${config.pageTitle}`}>
         <div className="RequestAccessPage">
           <div className="disclaimer">
-            Hey! Give us access to your Twitter account!<br/>
-            Our account is too busy.<br/>
-            Don't worry, we are just gonna steal all your tweets while you sleep.<br/>
-
-            <div className="joke">Nah... Just kidding</div>
+            Hey! Our account is too busy 💅<br/>
+            Can we use your Twitter account to look for Tweets? 🙏 😇<br/><br/>
 
             <Button
               onClick={this.requestTwitterAccess}
