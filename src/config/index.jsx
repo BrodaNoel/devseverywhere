@@ -1,3 +1,4 @@
+// @flow
 import reactjs from './icons/reactjs.png';
 import angularjs from './icons/angularjs.png';
 import vuejs from './icons/vuejs.png';

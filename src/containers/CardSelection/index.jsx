@@ -1,3 +1,4 @@
+// TODO: Add Flow in this file it after fix: https://github.com/facebook/flow/issues/235
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import './styles.css';
