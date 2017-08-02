@@ -26,11 +26,13 @@
     "victory": "0.19.1"
   },
   "devDependencies": {
+    "flow-bin": "^0.51.1",
     "node-sass": "^4.5.2",
     "npm-run-all": "^4.0.2",
     "react-scripts": "1.0.7"
   },
   "scripts": {
+    "flow": "flow",
     "build-css": "node-sass src/ -o src/",
     "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
