@@ -1,3 +1,5 @@
+// TODO: Move these types to another place?
+
 type Card = {
   data: CardData,
   tweets: Array<Tweet>,
@@ -52,8 +54,8 @@ type State = {
 
 type User = {
   isLogged: false,
-  credentials: void | Credentials,
-  firebaseToken: void | string
+  credentials: ?Credentials,
+  firebaseToken: ?string
 };
 
 type Credentials = {
@@ -63,6 +65,16 @@ type Credentials = {
 
 type Action = {
   +type: string
+};
+
+type ApiGetTweetsData = {
+  tweets: {
+    statuses: Array<Tweet>
+  },
+  metadata: {
+    min: string
+  },
+  isDone: boolean
 };
 
 type Dispatch = (action: Action | ThunkAction | PromiseAction) => any;

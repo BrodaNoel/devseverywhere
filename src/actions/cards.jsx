@@ -52,7 +52,7 @@ export const getMoreTweets = (cardName: string, user: User, history: any, tech: 
     return;
   }
 
-  if (!user.credentials || !user.credentials.accessToken || !user.credentials.secret) {
+  if (!user.credentials || !user.credentials.accessToken || !user.credentials.secret || !user.firebaseToken) {
     history.push(`/request-access/${tech}`);
 
     notification.error({
