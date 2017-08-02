@@ -1,12 +1,13 @@
+// @flow
 import api from 'api';
 import notification from 'antd/lib/notification';
 
-export const addCards = cards => ({
+export const addCards = (cards: Array<Card>): Action => ({
   type: 'ADD_CARDS',
   cards
 });
 
-export const addTweetsToCard = (card, tweets) => dispatch => {
+export const addTweetsToCard = (card: Card, tweets: Array<Tweet>): ThunkAction => dispatch => {
   dispatch({
     type: 'ADD_TWEETS_TO_CARD',
     card,
@@ -19,18 +20,18 @@ export const addTweetsToCard = (card, tweets) => dispatch => {
   });
 };
 
-export const setDoneToCard = card => ({
+export const setDoneToCard = (card: Card): Action => ({
   type: 'SET_DONE_TO_CARD',
   card
 });
 
-export const setNextMaxToCard = (card, nextMax) => ({
+export const setNextMaxToCard = (card: Card, nextMax: string): Action => ({
   type: 'SET_NEXT_MAX_TO_CARD',
   card,
   nextMax
 });
 
-export const changeSelectedCard = cardName => (dispatch, getState) => {
+export const changeSelectedCard = (cardName: string): ThunkAction => (dispatch, getState) => {
   const card = getState().cards.find(card => card.data.name === cardName);
 
   dispatch({
@@ -39,10 +40,30 @@ export const changeSelectedCard = cardName => (dispatch, getState) => {
   });
 };
 
-export const getMoreTweets = (cardName, user, history, tech) => (dispatch, getState) => {
+export const getMoreTweets = (cardName: string, user: User, history: any, tech: string): ThunkAction => (dispatch, getState) => {
   const card = getState().cards.find(card => card.data.name === cardName);
 
-  if (!card.isDone) {
+  if (!card) {
+    notification.error({
+      message: 'Card not found',
+      description: 'We could not find the selected Card'
+    });
+
+    return;
+  }
+
+  if (!user.credentials || !user.credentials.accessToken || !user.credentials.secret) {
+    history.push(`/request-access/${tech}`);
+
+    notification.error({
+      message: 'Missing credentials',
+      description: 'We could not find your credentials. You may need to login again'
+    });
+
+    return;
+  }
+
+  if (card.isDone) {
     api.getTweets(
       card,
       {
