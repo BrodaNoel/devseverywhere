@@ -13,6 +13,8 @@ This project was created to understand better:
 * Redux
   * Reselect (including custom Memoize functions) _(more info [here](http://redux.js.org/docs/recipes/ComputingDerivedData.html) and [here](https://github.com/reactjs/reselect))_
   * Thunk _(more info [here](https://github.com/gaearon/redux-thunk))_
+* Flow
+  * Flow-Typed
 * Axios
 * Webpack
 * Travis-CI
