@@ -1,6 +1,8 @@
+// @flow
+
 const storage = {
   local: {
-    save(key, value) {
+    save(key: string, value: any): boolean {
       try {
         window.localStorage.setItem(
           key,
@@ -13,7 +15,7 @@ const storage = {
       }
     },
 
-    get(key) {
+    get(key: string): any {
       try {
         return JSON.parse(
           window.localStorage.getItem(key)

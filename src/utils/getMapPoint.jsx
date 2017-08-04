@@ -1,8 +1,9 @@
+// @flow
 // Twitter API give us a "place" value, that contains 4 arrays.
 // Each of those arrays are: [lng, lat], so, those are 4 points.
 // This function return the middle point of that rectangule.
 // More info: https://dev.twitter.com/overview/api/places
-export default (coors) => {
+export default (coors: Array<any>): {lat: number, lng: number } => {
   let dataPoint = {
     lng: {
       max: -180,
