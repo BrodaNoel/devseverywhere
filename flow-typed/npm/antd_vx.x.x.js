@@ -1414,6 +1414,10 @@ declare module 'antd/lib/button/button' {
   declare module.exports: any;
 }
 
+declare module 'antd/lib/button' {
+  declare module.exports: any;
+}
+
 declare module 'antd/lib/button/index' {
   declare module.exports: any;
 }

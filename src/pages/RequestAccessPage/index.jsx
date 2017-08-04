@@ -1,3 +1,4 @@
+// TODO: Add Flow after Firebase fix issue with Typed
 // TODO: Here we have to simulate that someone is writting, adding one char at the
 // time that someone press the key.
 // I should create a prackage for this...

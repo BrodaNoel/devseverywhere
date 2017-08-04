@@ -1,6 +1,7 @@
+// @flow
 import { createSelectorCreator, defaultMemoize } from 'reselect'
 
-const getSelectedCard = state => state.cards.find(card => card.isSelected);
+const getSelectedCard = (state: State): Card | void => state.cards.find(card => card.isSelected);
 
 // We'll have a new cardData ONLY when the card change the name. Just that.
 // In any other moment, the card should be considered as it didn't changed.

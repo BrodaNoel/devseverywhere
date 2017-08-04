@@ -1,6 +1,8 @@
+// @flow
+
 import { createSelectorCreator, defaultMemoize } from 'reselect'
 
-const getSelectedCard = state => state.cards.find(card => card.isSelected);
+const getSelectedCard = (state: State): Card | void => state.cards.find(card => card.isSelected);
 
 const customSelectorCreator = createSelectorCreator(
   defaultMemoize,

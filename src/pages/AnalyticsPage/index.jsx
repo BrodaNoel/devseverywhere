@@ -1,3 +1,4 @@
+// @flow
 /**
   * More info about GoogleMapReact component:
   * https://github.com/istarkov/google-map-react/blob/master/API.md
@@ -17,7 +18,7 @@ import './styles.css';
 class AnalyticsPage extends Component {
   intervalId = 0;
 
-  getAnalyticsData(cardName) {
+  getAnalyticsData(cardName: string): void {
     this.props.getMoreTweets(
       cardName,
       this.props.user,
@@ -31,7 +32,7 @@ class AnalyticsPage extends Component {
   // This is not the pain point. The pain point is how to be sure when call it.
   // This function will clear the prev interval, look for tweets and set a
   // interval to keep looking for tweets.
-  startGettingData(props) {
+  startGettingData(props: {selectedCardName: string}): void {
     if (props.selectedCardName !== null) {
       clearInterval(this.intervalId);
 
@@ -73,7 +74,7 @@ class AnalyticsPage extends Component {
   // The component should me updated again when:
   // 1. We didn't have a selectedCardName AND NOW WE HAVE! (the user just came here), or,
   // 2. We had a selectedCardName, but now we have another one (someone changed the card)
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps): boolean {
     const fromNullToSomething = this.props.selectedCardName === null && nextProps.selectedCardName !== null;
     const changingCard = nextProps.selectedCardName !== this.props.selectedCardName;
 
