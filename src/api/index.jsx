@@ -1,3 +1,4 @@
+// TODO: Try to implement Flow here. There are issues with Axios
 import axios from 'axios';
 import config from 'config';
 var num = require('big-integer');
