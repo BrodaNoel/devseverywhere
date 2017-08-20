@@ -23,8 +23,6 @@ class RequestAccessPage extends Component {
   requestTwitterAccess = () => {
     this.setState({buttonLabel: 'Requesting Access...'});
 
-    firebase.initializeApp(config.firebase);
-
     let provider = new firebase.auth.TwitterAuthProvider();
 
     firebase.auth().signInWithPopup(provider).then(result => {

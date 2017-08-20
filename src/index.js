@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import reducers from 'reducers';
 import middlewares from 'middlewares';
 import utils from 'utils';
+import * as firebase from 'firebase';
 
 // Import ant styles
 import 'antd/lib/notification/style/css';
@@ -48,6 +49,8 @@ const store = createStore(
   initialState,
   applyMiddleware(thunk, middlewares.storage)
 );
+
+firebase.initializeApp(config.firebase);
 
 ReactDOM.render(
   <Provider store={store}>
