@@ -21,7 +21,7 @@ import './index.css';
 
 const storeGeneratedAt = utils.storage.local.get('storeGeneratedAt');
 const now = new Date().getTime();
-const oneDay = 1000 * 60 * 60 * 24;
+const oneDay = 86400000; // 1000 * 60 * 60 * 24
 
 // If State was generated more than 24 hours ago, then, restart the state.
 let initialState = null;
@@ -40,6 +40,8 @@ if (storeGeneratedAt === null || (now - storeGeneratedAt) > oneDay) {
   });
 
   initialState = { cards };
+  utils.storage.local.save('state', initialState);
+  utils.storage.local.save('storeGeneratedAt', now);
 } else {
   initialState = utils.storage.local.get('state');
 }
