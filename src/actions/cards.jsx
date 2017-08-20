@@ -63,7 +63,7 @@ export const getMoreTweets = (cardName: string, user: User, history: any, tech: 
     return;
   }
 
-  if (card.isDone) {
+  if (!card.isDone) {
     api.getTweets(
       card,
       {
